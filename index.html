@@ -923,6 +923,7 @@
     // RENDER ALL
     // ============================================================
     function renderAll() {
+      resolveKOTeams();
       renderSpielplan();
       renderGruppen();
       renderKO();
@@ -968,11 +969,11 @@
 
       // Next matches highlight
       if (nextMatches.length && activeFilter === 'alle') {
+        const anyLive = nextMatches.some(m => m.Status === 'läuft');
+        html += `<div class="next-match-card">
+      <div class="next-label">${anyLive ? '⚽ Läuft gerade' : '⏱ Nächste Spiele'}</div>`;
         nextMatches.forEach((nextMatch, idx) => {
-          const label = nextMatch.Status === 'läuft' ? '⚽ Läuft gerade' : (idx === 0 ? '⏱ Nächstes Spiel' : '⏱ Danach');
-          html += `<div class="next-match-card" ${idx > 0 ? 'style="margin-top:8px;"' : ''}>
-      <div class="next-label">${label}</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          html += `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;${idx > 0 ? 'margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);' : ''}">
         <div style="text-align:right;flex:1;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;">${nextMatch.Team1}</div>
         </div>
@@ -983,9 +984,9 @@
         <div style="text-align:left;flex:1;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;">${nextMatch.Team2}</div>
         </div>
-      </div>
-    </div>`;
+      </div>`;
         });
+        html += `</div>`;
       }
 
       Object.entries(byDate).forEach(([date, dayMatches]) => {
@@ -1096,6 +1097,99 @@
         });
 
       return Object.values(stats).sort((a, b) => b.pts - a.pts || (b.tf - b.ta) - (a.tf - a.ta) || b.tf - a.tf);
+    }
+
+    // ============================================================
+    // BEST THIRD-PLACED TEAMS (like Euro 2024)
+    // ============================================================
+    function resolveKOTeams() {
+      const groups = ['A', 'B', 'C', 'D', 'E', 'F'];
+      const groupResults = {};
+      groups.forEach(g => {
+        groupResults[g] = calcStandings(g);
+      });
+
+      // Restore original team names before resolving (for repeated calls)
+      const koMatches = tournamentData.matches.filter(m => m.Runde !== 'Gruppe');
+      koMatches.forEach(m => {
+        if (!m._origTeam1) m._origTeam1 = m.Team1;
+        if (!m._origTeam2) m._origTeam2 = m.Team2;
+        m.Team1 = m._origTeam1;
+        m.Team2 = m._origTeam2;
+      });
+
+      // Build resolution map: "Sieger A1" -> 1st of group A, "Sieger A2" -> 2nd, etc.
+      const resolveMap = {};
+      groups.forEach(g => {
+        const st = groupResults[g];
+        if (st.length >= 1 && st[0].sp > 0) resolveMap[`Sieger ${g}1`] = st[0].name;
+        if (st.length >= 2 && st[0].sp > 0) resolveMap[`Sieger ${g}2`] = st[1].name;
+      });
+
+      // Collect all third-placed teams
+      const thirdPlaced = [];
+      groups.forEach(g => {
+        const st = groupResults[g];
+        if (st.length >= 3 && st[0].sp > 0) {
+          thirdPlaced.push({ ...st[2], gruppe: g });
+        }
+      });
+
+      // Sort third-placed: points > goal diff > goals scored
+      thirdPlaced.sort((a, b) => b.pts - a.pts || (b.tf - b.ta) - (a.tf - a.ta) || b.tf - a.tf);
+
+      // Map the 4 best third-placed
+      if (thirdPlaced.length >= 4) {
+        resolveMap['1.Bester Dritter'] = thirdPlaced[0].name;
+        resolveMap['2.Bester Dritter'] = thirdPlaced[1].name;
+        resolveMap['3.Bester Dritter'] = thirdPlaced[2].name;
+        resolveMap['4.Bester Dritter'] = thirdPlaced[3].name;
+      }
+
+      // Resolve KO match references (Achtelfinale -> Viertelfinale -> ...)
+
+      // Build results map for KO: SpielID -> winner/loser
+      const matchResults = {};
+      koMatches.forEach(m => {
+        if (m.Status === 'beendet') {
+          const g1 = parseInt(m.Tore1) || 0, g2 = parseInt(m.Tore2) || 0;
+          matchResults[m.SpielID] = {
+            winner: g1 >= g2 ? m.Team1 : m.Team2,
+            loser: g1 >= g2 ? m.Team2 : m.Team1
+          };
+        }
+      });
+
+      // Resolve team names in KO matches
+      koMatches.forEach(m => {
+        // Resolve from group results
+        if (resolveMap[m.Team1]) m.Team1 = resolveMap[m.Team1];
+        if (resolveMap[m.Team2]) m.Team2 = resolveMap[m.Team2];
+
+        // Resolve from previous KO results: "Sieger AF37" -> winner of match 37
+        const siegerMatch1 = m.Team1.match(/^Sieger (AF|VF|HF)(\d+)$/);
+        if (siegerMatch1) {
+          const res = matchResults[siegerMatch1[2]];
+          if (res) m.Team1 = res.winner;
+        }
+        const siegerMatch2 = m.Team2.match(/^Sieger (AF|VF|HF)(\d+)$/);
+        if (siegerMatch2) {
+          const res = matchResults[siegerMatch2[2]];
+          if (res) m.Team2 = res.winner;
+        }
+
+        // Resolve losers: "Verlierer HF49"
+        const verliererMatch1 = m.Team1.match(/^Verlierer (AF|VF|HF)(\d+)$/);
+        if (verliererMatch1) {
+          const res = matchResults[verliererMatch1[2]];
+          if (res) m.Team1 = res.loser;
+        }
+        const verliererMatch2 = m.Team2.match(/^Verlierer (AF|VF|HF)(\d+)$/);
+        if (verliererMatch2) {
+          const res = matchResults[verliererMatch2[2]];
+          if (res) m.Team2 = res.loser;
+        }
+      });
     }
 
     // ============================================================
