@@ -777,7 +777,7 @@
           fetchCSV(SHEET_ID, 'Mannschaften')
         ]);
         tournamentData.matches = parseCSV(matchesCSV, ['SpielID', 'Runde', 'Gruppe', 'Platz', 'Uhrzeit', 'Team1', 'Team2', 'Tore1', 'Tore2', 'Status']);
-        tournamentData.teams = parseCSV(teamsCSV, ['Name', 'Gruppe', 'Emoji']);
+        tournamentData.teams = parseCSV(teamsCSV, ['StartNr', 'Name', 'Gruppe', 'Emoji']);
         updateLastUpdate();
         renderAll();
 
@@ -953,8 +953,8 @@
 
       if (!filtered.length) { container.innerHTML = '<div class="loading">Keine Spiele gefunden</div>'; return; }
 
-      // Find next upcoming match
-      const nextMatch = matches.find(m => m.Status === 'geplant' || m.Status === 'läuft');
+      // Find next upcoming matches (2)
+      const nextMatches = matches.filter(m => m.Status === 'geplant' || m.Status === 'läuft').slice(0, 2);
 
       // Group by date
       const byDate = {};
@@ -966,14 +966,14 @@
 
       let html = '';
 
-      // Next match highlight
-      if (nextMatch && activeFilter === 'alle') {
-        const t1 = getTeam(nextMatch.Team1), t2 = getTeam(nextMatch.Team2);
-        html += `<div class="next-match-card">
-      <div class="next-label">${nextMatch.Status === 'läuft' ? '⚽ Läuft gerade' : '⏱ Nächstes Spiel'}</div>
+      // Next matches highlight
+      if (nextMatches.length && activeFilter === 'alle') {
+        nextMatches.forEach((nextMatch, idx) => {
+          const label = nextMatch.Status === 'läuft' ? '⚽ Läuft gerade' : (idx === 0 ? '⏱ Nächstes Spiel' : '⏱ Danach');
+          html += `<div class="next-match-card" ${idx > 0 ? 'style="margin-top:8px;"' : ''}>
+      <div class="next-label">${label}</div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
         <div style="text-align:right;flex:1;">
-          ${t1.Emoji ? `<div style="font-size:22px;">${t1.Emoji}</div>` : ''}
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;">${nextMatch.Team1}</div>
         </div>
         <div style="text-align:center;">
@@ -981,11 +981,11 @@
           <div style="font-size:11px;margin-top:4px;" class="field-tag ${nextMatch.Platz === 'Platz 1' ? 'badge-field1' : 'badge-field2'}">${nextMatch.Platz}</div>
         </div>
         <div style="text-align:left;flex:1;">
-          ${t2.Emoji ? `<div style="font-size:22px;">${t2.Emoji}</div>` : ''}
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;">${nextMatch.Team2}</div>
         </div>
       </div>
     </div>`;
+        });
       }
 
       Object.entries(byDate).forEach(([date, dayMatches]) => {
@@ -1010,7 +1010,6 @@
 
       return `<div class="match-row ${played ? 'match-played' : 'match-pending'}">
     <div class="team-home">
-      ${t1.Emoji ? `<div class="team-flag">${t1.Emoji}</div>` : ''}
       <div class="team-name">${m.Team1}</div>
     </div>
     <div class="match-score">
@@ -1026,7 +1025,6 @@
       </div>
     </div>
     <div class="team-away">
-      ${t2.Emoji ? `<div class="team-flag">${t2.Emoji}</div>` : ''}
       <div class="team-name">${m.Team2}</div>
     </div>
   </div>`;
@@ -1058,7 +1056,7 @@
           const posSymbol = i < 2 ? '●' : (i === 2 ? '◐' : '○');
           html += `<tr>
         <td style="width:28px;"><span class="pos-num ${posClass}">${i + 1}</span></td>
-        <td class="team-col">${team.Emoji ? `<span style="margin-right:6px;">${team.Emoji}</span>` : ''} ${s.name}</td>
+        <td class="team-col">${s.name}</td>
         <td>${s.sp}</td>
         <td>${s.g}</td>
         <td>${s.u}</td>
@@ -1124,7 +1122,7 @@
     // HELPERS
     // ============================================================
     function getTeam(name) {
-      return tournamentData.teams.find(t => t.Name === name) || { Name: name, Gruppe: '', Emoji: '⚽' };
+      return tournamentData.teams.find(t => t.Name === name) || { Name: name, Gruppe: '', Emoji: '' };
     }
 
     function showTab(tab, evt) {
