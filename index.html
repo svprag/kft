@@ -1274,12 +1274,12 @@
       const tbody = document.getElementById('sieger-table');
       if (!tbody) return;
       const noTurnier = (s) => s.startsWith('kein');
-      [...siegerData].reverse().forEach(([year, winner], i) => {
+      [...siegerData].reverse().forEach(([year, winner]) => {
         const tr = document.createElement('tr');
-        const isRecent = year >= 2023 && !noTurnier(winner);
+        const hasWinner = !noTurnier(winner);
         tr.innerHTML = `
       <td style="width:28px;padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#8b949e;border-bottom:1px solid #30363d;">${year}</td>
-      <td style="padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:${isRecent ? '17' : '15'}px;font-weight:${isRecent ? '700' : '600'};color:${noTurnier(winner) ? '#484f58' : isRecent ? '#e6edf3' : '#8b949e'};border-bottom:1px solid #30363d;${noTurnier(winner) ? 'font-style:italic;' : ''}">${noTurnier(winner) ? '' : '🏆 '}${winner}</td>`;
+      <td style="padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:${hasWinner ? '17' : '15'}px;font-weight:${hasWinner ? '700' : '600'};color:${hasWinner ? '#e6edf3' : '#484f58'};border-bottom:1px solid #30363d;${!hasWinner ? 'font-style:italic;' : ''}">${hasWinner ? '🏆 ' : ''}${winner}</td>`;
         tbody.appendChild(tr);
       });
     })();
