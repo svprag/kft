@@ -639,11 +639,11 @@
   </header>
 
   <nav>
-    <div class="tab active" onclick="showTab('spielplan')">Spielplan</div>
-    <div class="tab" onclick="showTab('gruppen')">Gruppen</div>
-    <div class="tab" onclick="showTab('ko')">K.O.-Runde</div>
-    <div class="tab" onclick="showTab('sieger')">Turniersieger</div>
-    <div class="tab" onclick="showTab('sponsoren')">Sponsoren</div>
+    <div class="tab active" onclick="showTab('spielplan', event)">Spielplan</div>
+    <div class="tab" onclick="showTab('gruppen', event)">Gruppen</div>
+    <div class="tab" onclick="showTab('ko', event)">K.O.-Runde</div>
+    <div class="tab" onclick="showTab('sieger', event)">Turniersieger</div>
+    <div class="tab" onclick="showTab('sponsoren', event)">Sponsoren</div>
   </nav>
 
 
@@ -735,14 +735,12 @@
 
     <div
       style="background:rgba(31,111,235,0.08);border:1px solid rgba(31,111,235,0.25);border-radius:8px;padding:14px;font-size:13px;color:#8b949e;text-align:center;margin-top:8px;">
-      Interesse als Sponsor? Kontakt: <a href="/cdn-cgi/l/email-protection#c6b5b6a9a8b5a9b4a3a886b5b0b6b4a7a1e8a2a3"
-        style="color:#79c0ff;"><span class="__cf_email__"
-          data-cfemail="0e7d7e61607d617c6b604e7d787e7c6f69206a6b">[email&#160;protected]</span></a>
+      Interesse als Sponsor? Kontakt: <a href="mailto:sponsoren@svprag.de"
+        style="color:#79c0ff;">sponsoren@svprag.de</a>
     </div>
   </div>
 
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script>
     // ============================================================
     // CONFIG
@@ -756,10 +754,12 @@
     // ============================================================
     window.addEventListener('load', () => {
       if (SHEET_ID) {
-        document.getElementById('sheet-id-input').value = SHEET_ID;
+        const input = document.getElementById('sheet-id-input');
+        if (input) input.value = SHEET_ID;
         fetchSheetData();
       } else {
-        document.getElementById('config-banner').classList.add('visible');
+        const banner = document.getElementById('config-banner');
+        if (banner) banner.classList.add('visible');
         loadDemoData();
       }
       setInterval(() => {
@@ -806,11 +806,14 @@
     }
 
     function saveSheetId() {
-      const val = document.getElementById('sheet-id-input').value.trim();
+      const input = document.getElementById('sheet-id-input');
+      if (!input) return;
+      const val = input.value.trim();
       if (!val) return;
       SHEET_ID = val;
       localStorage.setItem('turnier_sheet_id', val);
-      document.getElementById('connection-status').textContent = 'Verbinde…';
+      const status = document.getElementById('connection-status');
+      if (status) status.textContent = 'Verbinde…';
       fetchSheetData();
     }
 
@@ -1124,11 +1127,12 @@
       return tournamentData.teams.find(t => t.Name === name) || { Name: name, Gruppe: '', Emoji: '⚽' };
     }
 
-    function showTab(tab) {
+    function showTab(tab, evt) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.getElementById('tab-' + tab).classList.add('active');
-      event.target.classList.add('active');
+      const clickedTab = (evt && evt.target) || (typeof event !== 'undefined' && event.target);
+      if (clickedTab) clickedTab.classList.add('active');
     }
 
     // ============================================================
@@ -1160,4 +1164,10 @@
         const isRecent = year >= 2023 && !noTurnier(winner);
         tr.innerHTML = `
       <td style="width:28px;padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#8b949e;border-bottom:1px solid #30363d;">${year}</td>
-      <td style="padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:${isRecent ? '17' : '15'}px;fon
+      <td style="padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:${isRecent ? '17' : '15'}px;font-weight:${isRecent ? '700' : '600'};color:${noTurnier(winner) ? '#484f58' : isRecent ? '#e6edf3' : '#8b949e'};border-bottom:1px solid #30363d;${noTurnier(winner) ? 'font-style:italic;' : ''}">${isRecent ? '🏆 ' : ''}${winner}</td>`;
+        tbody.appendChild(tr);
+      });
+    })();
+  </script>
+</body>
+</html>
