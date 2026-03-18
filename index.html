@@ -923,6 +923,7 @@
     // RENDER ALL
     // ============================================================
     function renderAll() {
+      about:blank#blocked
       resolveKOTeams();
       renderSpielplan();
       renderGruppen();
@@ -1038,10 +1039,14 @@
       const groups = ['A', 'B', 'C', 'D', 'E', 'F'];
       let html = '';
 
+      // Determine which third-placed teams qualify (best 4)
+      const qualifiedThirds = getQualifiedThirdPlaced();
+
       groups.forEach(g => {
         const teams = tournamentData.teams.filter(t => t.Gruppe === g);
         if (!teams.length) return;
         const standings = calcStandings(g);
+        const thirdQualifies = qualifiedThirds.includes(g);
 
         html += `<div class="card">
       <div class="card-header">
@@ -1053,8 +1058,8 @@
 
         standings.forEach((s, i) => {
           const team = getTeam(s.name);
-          const posClass = i < 2 ? 'pos-q' : (i === 2 ? 'pos-ko' : '');
-          const posSymbol = i < 2 ? '●' : (i === 2 ? '◐' : '○');
+          const isQualifiedThird = i === 2 && thirdQualifies;
+          const posClass = i < 2 ? 'pos-q' : (isQualifiedThird ? 'pos-ko' : '');
           html += `<tr>
         <td style="width:28px;"><span class="pos-num ${posClass}">${i + 1}</span></td>
         <td class="team-col">${s.name}</td>
@@ -1063,19 +1068,32 @@
         <td>${s.u}</td>
         <td>${s.v}</td>
         <td style="font-size:12px;">${s.tf}:${s.ta}</td>
-        <td class="pts-cell" style="color:${i < 2 ? 'var(--green-win-text)' : i === 2 ? 'var(--gold)' : 'var(--text)'}">${s.pts}</td>
+        <td class="pts-cell" style="color:${i < 2 ? 'var(--green-win-text)' : isQualifiedThird ? 'var(--gold)' : 'var(--text)'}">${s.pts}</td>
       </tr>`;
         });
 
         html += `</tbody></table>
       <div style="padding:8px 12px;font-size:11px;color:var(--text2);display:flex;gap:12px;">
         <span><span style="color:var(--green-win-text)">●</span> Achtelfinale direkt</span>
-        <span><span style="color:var(--gold)">◐</span> Evtl. als Dritter</span>
+        <span><span style="color:var(--gold)">◐</span> Bester Dritter</span>
       </div>
     </div>`;
       });
 
       document.getElementById('gruppen-content').innerHTML = html || '<div class="loading">Keine Gruppenspiele gefunden</div>';
+    }
+
+    function getQualifiedThirdPlaced() {
+      const groups = ['A', 'B', 'C', 'D', 'E', 'F'];
+      const thirdPlaced = [];
+      groups.forEach(g => {
+        const st = calcStandings(g);
+        if (st.length >= 3 && st[0].sp > 0) {
+          thirdPlaced.push({ ...st[2], gruppe: g });
+        }
+      });
+      thirdPlaced.sort((a, b) => b.pts - a.pts || (b.tf - b.ta) - (a.tf - a.ta) || b.tf - a.tf);
+      return thirdPlaced.slice(0, 4).map(t => t.gruppe);
     }
 
     function calcStandings(group) {
@@ -1118,19 +1136,25 @@
         m.Team2 = m._origTeam2;
       });
 
-      // Build resolution map: "Sieger A1" -> 1st of group A, "Sieger A2" -> 2nd, etc.
+      // Build resolution map: only resolve when ALL group matches are completed
       const resolveMap = {};
       groups.forEach(g => {
+        const groupMatches = tournamentData.matches.filter(m => m.Runde === 'Gruppe' && m.Gruppe === g);
+        const allCompleted = groupMatches.length > 0 && groupMatches.every(m => m.Status === 'beendet');
+        if (!allCompleted) return;
         const st = groupResults[g];
-        if (st.length >= 1 && st[0].sp > 0) resolveMap[`Sieger ${g}1`] = st[0].name;
-        if (st.length >= 2 && st[0].sp > 0) resolveMap[`Sieger ${g}2`] = st[1].name;
+        if (st.length >= 1) resolveMap[`Sieger ${g}1`] = st[0].name;
+        if (st.length >= 2) resolveMap[`Sieger ${g}2`] = st[1].name;
       });
 
-      // Collect all third-placed teams
+      // Collect third-placed teams (only from fully completed groups)
       const thirdPlaced = [];
       groups.forEach(g => {
+        const groupMatches = tournamentData.matches.filter(m => m.Runde === 'Gruppe' && m.Gruppe === g);
+        const allCompleted = groupMatches.length > 0 && groupMatches.every(m => m.Status === 'beendet');
+        if (!allCompleted) return;
         const st = groupResults[g];
-        if (st.length >= 3 && st[0].sp > 0) {
+        if (st.length >= 3) {
           thirdPlaced.push({ ...st[2], gruppe: g });
         }
       });
@@ -1256,10 +1280,11 @@
         const isRecent = year >= 2023 && !noTurnier(winner);
         tr.innerHTML = `
       <td style="width:28px;padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#8b949e;border-bottom:1px solid #30363d;">${year}</td>
-      <td style="padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:${isRecent ? '17' : '15'}px;font-weight:${isRecent ? '700' : '600'};color:${noTurnier(winner) ? '#484f58' : isRecent ? '#e6edf3' : '#8b949e'};border-bottom:1px solid #30363d;${noTurnier(winner) ? 'font-style:italic;' : ''}">${isRecent ? '🏆 ' : ''}${winner}</td>`;
+      <td style="padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:${isRecent ? '17' : '15'}px;font-weight:${isRecent ? '700' : '600'};color:${noTurnier(winner) ? '#484f58' : isRecent ? '#e6edf3' : '#8b949e'};border-bottom:1px solid #30363d;${noTurnier(winner) ? 'font-style:italic;' : ''}">${noTurnier(winner) ? '' : '🏆 '}${winner}</td>`;
         tbody.appendChild(tr);
       });
     })();
   </script>
 </body>
+
 </html>
