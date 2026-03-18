@@ -1,765 +1,972 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Turnier 2025</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SV PRAG - KFT 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap"
+    rel="stylesheet">
 
-<!-- PWA Manifest inline -->
-<link rel="manifest" href="data:application/json,{%22name%22:%22Turnier+2025%22,%22short_name%22:%22Turnier%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%231a1a2e%22,%22theme_color%22:%22%230f3460%22}">
-<meta name="theme-color" content="#0f3460">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Turnier">
+  <!-- PWA Manifest inline -->
+  <link rel="manifest"
+    href="data:application/json,{%22name%22:%22Turnier+2025%22,%22short_name%22:%22Turnier%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%231a1a2e%22,%22theme_color%22:%22%230f3460%22}">
+  <meta name="theme-color" content="#0f3460">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Turnier">
 
-<style>
-  :root {
-    --bg: #0d1117;
-    --bg2: #161b22;
-    --bg3: #21262d;
-    --accent: #238636;
-    --accent2: #1f6feb;
-    --gold: #e3b341;
-    --red: #da3633;
-    --text: #e6edf3;
-    --text2: #8b949e;
-    --border: #30363d;
-    --green-win: #196c2e;
-    --green-win-text: #3fb950;
-    --red-loss: #6e1a1a;
-    --red-loss-text: #ff7b72;
-    --draw: #3d3200;
-    --draw-text: #d29922;
-  }
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --accent: #238636;
+      --accent2: #1f6feb;
+      --gold: #e3b341;
+      --red: #da3633;
+      --text: #e6edf3;
+      --text2: #8b949e;
+      --border: #30363d;
+      --green-win: #196c2e;
+      --green-win-text: #3fb950;
+      --red-loss: #6e1a1a;
+      --red-loss-text: #ff7b72;
+      --draw: #3d3200;
+      --draw-text: #d29922;
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 0 80px;
-  }
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 0 80px;
+    }
 
-  /* HEADER */
-  header {
-    background: linear-gradient(180deg, #0f3460 0%, #0d1117 100%);
-    padding: 20px 16px 16px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid var(--border);
-  }
-  .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 4px;
-  }
-  h1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #fff;
-  }
-  .last-update {
-    font-size: 11px;
-    color: var(--text2);
-  }
-  .live-badge {
-    display: inline-block;
-    background: var(--red);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 2px 8px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+    /* HEADER */
+    header {
+      background: linear-gradient(180deg, #0f3460 0%, #0d1117 100%);
+      padding: 20px 16px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
 
-  /* NAV TABS */
-  nav {
-    display: flex;
-    gap: 4px;
-    padding: 12px 16px 0;
-    background: var(--bg2);
-    border-bottom: 1px solid var(--border);
-  }
-  .tab {
-    padding: 8px 16px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: var(--text2);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .tab.active { color: var(--text); border-bottom-color: var(--accent2); }
-  .tab:hover:not(.active) { color: var(--text); }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
 
-  /* SECTIONS */
-  .section { display: none; padding: 16px; }
-  .section.active { display: block; }
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #fff;
+    }
 
-  /* CARDS */
-  .card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 12px;
-    overflow: hidden;
-  }
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    background: var(--bg3);
-    border-bottom: 1px solid var(--border);
-  }
-  .card-header h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text2);
-  }
-  .badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .badge-field1 { background: rgba(31,111,235,0.2); color: #79c0ff; }
-  .badge-field2 { background: rgba(35,134,54,0.2); color: #56d364; }
-  .badge-ko { background: rgba(227,179,65,0.2); color: var(--gold); }
+    .last-update {
+      font-size: 11px;
+      color: var(--text2);
+    }
 
-  /* MATCH ROW */
-  .match-row {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--border);
-    gap: 8px;
-  }
-  .match-row:last-child { border-bottom: none; }
-  .team-home { text-align: right; }
-  .team-away { text-align: left; }
-  .team-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-  }
-  .team-flag { font-size: 20px; min-height: 24px; }
-  .match-score {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    justify-content: center;
-    min-width: 80px;
-  }
-  .score-box {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 4px 10px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    min-width: 36px;
-    text-align: center;
-  }
-  .score-divider { font-size: 14px; color: var(--text2); }
-  .match-time {
-    font-size: 11px;
-    color: var(--text2);
-    text-align: center;
-  }
-  .match-pending .score-box { color: var(--text2); font-size: 14px; font-weight: 600; }
-  .match-played .score-box-home-win { background: rgba(35,134,54,0.15); border-color: #238636; color: #56d364; }
-  .match-played .score-box-away-win { background: rgba(218,54,51,0.15); border-color: #da3633; color: #ff7b72; }
+    .live-badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      animation: pulse 2s infinite;
+    }
 
-  /* STANDINGS TABLE */
-  .standings-table { width: 100%; border-collapse: collapse; }
-  .standings-table th {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text2);
-    padding: 8px 12px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-  }
-  .standings-table th.team-col { text-align: left; }
-  .standings-table td {
-    padding: 9px 12px;
-    text-align: center;
-    font-size: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-  .standings-table tr:last-child td { border-bottom: none; }
-  .standings-table td.team-col {
-    text-align: left;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-  }
-  .pos-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 16px;
-    color: var(--text2);
-    width: 24px;
-    display: inline-block;
-    text-align: center;
-  }
-  .pos-q { color: var(--accent2); }
-  .pos-ko { color: var(--gold); }
-  .pts-cell { font-weight: 700; font-size: 16px; }
-  .form-dot {
-    display: inline-block;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    margin: 0 1px;
-  }
-  .form-w { background: #238636; }
-  .form-d { background: #d29922; }
-  .form-l { background: #da3633; }
+    @keyframes pulse {
 
-  /* BRACKET / KO */
-  .ko-round-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin: 20px 0 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
-  }
+      0%,
+      100% {
+        opacity: 1
+      }
 
-  /* SCHEDULE TAB */
-  .schedule-filter {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  .filter-btn {
-    padding: 6px 14px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text2);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .filter-btn.active, .filter-btn:hover {
-    background: var(--bg3);
-    border-color: var(--accent2);
-    color: var(--text);
-  }
+      50% {
+        opacity: 0.6
+      }
+    }
 
-  /* FIELD INDICATOR */
-  .field-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+    /* NAV TABS */
+    nav {
+      display: flex;
+      gap: 4px;
+      padding: 12px 16px 0;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
 
-  /* LOADING */
-  .loading {
-    text-align: center;
-    padding: 40px;
-    color: var(--text2);
-    font-size: 14px;
-  }
-  .spinner {
-    width: 24px; height: 24px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent2);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 12px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+    .tab {
+      padding: 8px 16px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text2);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
 
-  .error-msg {
-    background: rgba(218,54,51,0.1);
-    border: 1px solid var(--red);
-    border-radius: 8px;
-    padding: 16px;
-    color: var(--red-loss-text);
-    font-size: 14px;
-    margin: 16px 0;
-  }
+    .tab.active {
+      color: var(--text);
+      border-bottom-color: var(--accent2);
+    }
 
-  /* NEXT MATCH HIGHLIGHT */
-  .next-match-card {
-    background: linear-gradient(135deg, rgba(31,111,235,0.15) 0%, rgba(35,134,54,0.1) 100%);
-    border: 1px solid rgba(31,111,235,0.5);
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 20px;
-  }
-  .next-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent2);
-    margin-bottom: 10px;
-  }
+    .tab:hover:not(.active) {
+      color: var(--text);
+    }
 
-  /* SCROLL indicator for nav */
-  nav { overflow-x: auto; scrollbar-width: none; }
-  nav::-webkit-scrollbar { display: none; }
+    /* SECTIONS */
+    .section {
+      display: none;
+      padding: 16px;
+    }
 
-  /* CONFIG BANNER */
-  .config-banner {
-    background: rgba(227,179,65,0.1);
-    border: 1px solid rgba(227,179,65,0.4);
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin: 0 16px 16px;
-    font-size: 13px;
-    color: var(--gold);
-    display: none;
-  }
-  .config-banner.visible { display: block; }
+    .section.active {
+      display: block;
+    }
 
-  /* ADMIN HINT */
-  .admin-section {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 20px;
-  }
-  .admin-section h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text2);
-    margin-bottom: 10px;
-  }
-  input[type="text"] {
-    width: 100%;
-    padding: 8px 12px;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    font-size: 14px;
-    margin-bottom: 8px;
-    font-family: 'Barlow', sans-serif;
-  }
-  input[type="text"]:focus { outline: none; border-color: var(--accent2); }
-  button {
-    padding: 8px 16px;
-    background: var(--accent2);
-    border: none;
-    border-radius: 6px;
-    color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-  button:hover { opacity: 0.85; }
+    /* CARDS */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
 
-  .info-text {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.6;
-    margin-top: 8px;
-  }
-  .info-text code {
-    font-family: monospace;
-    font-size: 12px;
-    background: var(--bg3);
-    padding: 1px 5px;
-    border-radius: 3px;
-    color: #79c0ff;
-  }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+    }
 
-  @media (max-width: 480px) {
-    .team-name { font-size: 14px; }
-    .score-box { font-size: 18px; padding: 4px 7px; min-width: 30px; }
-    .standings-table th, .standings-table td { padding: 7px 6px; }
-  }
+    .card-header h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text2);
+    }
 
-  .sponsor-card {
-    background: #fff;
-    border: 1px solid #30363d;
-    border-radius: 8px;
-    padding: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 70px;
-    transition: border-color 0.2s;
-  }
-  .sponsor-card:hover { border-color: #1f6feb; }
-  .sponsor-card img { max-width: 100%; max-height: 50px; width: auto; object-fit: contain; }
-  .sponsor-text-card { flex-direction: column; gap: 0; }
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-</style>
+    .badge-field1 {
+      background: rgba(31, 111, 235, 0.2);
+      color: #79c0ff;
+    }
+
+    .badge-field2 {
+      background: rgba(35, 134, 54, 0.2);
+      color: #56d364;
+    }
+
+    .badge-ko {
+      background: rgba(227, 179, 65, 0.2);
+      color: var(--gold);
+    }
+
+    /* MATCH ROW */
+    .match-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .match-row:last-child {
+      border-bottom: none;
+    }
+
+    .team-home {
+      text-align: right;
+    }
+
+    .team-away {
+      text-align: left;
+    }
+
+    .team-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .team-flag {
+      font-size: 20px;
+      min-height: 24px;
+    }
+
+    .match-score {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      justify-content: center;
+      min-width: 80px;
+    }
+
+    .score-box {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .score-divider {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .match-time {
+      font-size: 11px;
+      color: var(--text2);
+      text-align: center;
+    }
+
+    .match-pending .score-box {
+      color: var(--text2);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .match-played .score-box-home-win {
+      background: rgba(35, 134, 54, 0.15);
+      border-color: #238636;
+      color: #56d364;
+    }
+
+    .match-played .score-box-away-win {
+      background: rgba(218, 54, 51, 0.15);
+      border-color: #da3633;
+      color: #ff7b72;
+    }
+
+    /* STANDINGS TABLE */
+    .standings-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .standings-table th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text2);
+      padding: 8px 12px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .standings-table th.team-col {
+      text-align: left;
+    }
+
+    .standings-table td {
+      padding: 9px 12px;
+      text-align: center;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .standings-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .standings-table td.team-col {
+      text-align: left;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .pos-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--text2);
+      width: 24px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .pos-q {
+      color: var(--accent2);
+    }
+
+    .pos-ko {
+      color: var(--gold);
+    }
+
+    .pts-cell {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .form-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin: 0 1px;
+    }
+
+    .form-w {
+      background: #238636;
+    }
+
+    .form-d {
+      background: #d29922;
+    }
+
+    .form-l {
+      background: #da3633;
+    }
+
+    /* BRACKET / KO */
+    .ko-round-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 20px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* SCHEDULE TAB */
+    .schedule-filter {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--bg3);
+      border-color: var(--accent2);
+      color: var(--text);
+    }
+
+    /* FIELD INDICATOR */
+    .field-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text2);
+      font-size: 14px;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent2);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error-msg {
+      background: rgba(218, 54, 51, 0.1);
+      border: 1px solid var(--red);
+      border-radius: 8px;
+      padding: 16px;
+      color: var(--red-loss-text);
+      font-size: 14px;
+      margin: 16px 0;
+    }
+
+    /* NEXT MATCH HIGHLIGHT */
+    .next-match-card {
+      background: linear-gradient(135deg, rgba(31, 111, 235, 0.15) 0%, rgba(35, 134, 54, 0.1) 100%);
+      border: 1px solid rgba(31, 111, 235, 0.5);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .next-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 10px;
+    }
+
+    /* SCROLL indicator for nav */
+    nav {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* CONFIG BANNER */
+    .config-banner {
+      background: rgba(227, 179, 65, 0.1);
+      border: 1px solid rgba(227, 179, 65, 0.4);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 0 16px 16px;
+      font-size: 13px;
+      color: var(--gold);
+      display: none;
+    }
+
+    .config-banner.visible {
+      display: block;
+    }
+
+    /* ADMIN HINT */
+    .admin-section {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .admin-section h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 14px;
+      margin-bottom: 8px;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent2);
+    }
+
+    button {
+      padding: 8px 16px;
+      background: var(--accent2);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    .info-text {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    .info-text code {
+      font-family: monospace;
+      font-size: 12px;
+      background: var(--bg3);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #79c0ff;
+    }
+
+    @media (max-width: 480px) {
+      .team-name {
+        font-size: 14px;
+      }
+
+      .score-box {
+        font-size: 18px;
+        padding: 4px 7px;
+        min-width: 30px;
+      }
+
+      .standings-table th,
+      .standings-table td {
+        padding: 7px 6px;
+      }
+    }
+
+    .sponsor-card {
+      background: #fff;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+      transition: border-color 0.2s;
+    }
+
+    .sponsor-card:hover {
+      border-color: #1f6feb;
+    }
+
+    .sponsor-card img {
+      max-width: 100%;
+      max-height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .sponsor-text-card {
+      flex-direction: column;
+      gap: 0;
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <div class="header-top">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <img src="logos/sv_prag_logo.png" alt="SV Prag" style="height:44px;width:auto;">
-      <div>
-        <div style="font-size:11px;color:#8b949e;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:600;">SV Prag Stuttgart</div>
-        <h1 id="tournament-title">KFT 2026</h1>
+  <header>
+    <div class="header-top">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="logos/sv_prag_logo.png" alt="SV Prag" style="height:44px;width:auto;">
+        <div>
+          <div
+            style="font-size:11px;color:#8b949e;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:600;">
+            SV Prag Stuttgart</div>
+          <h1 id="tournament-title">KFT 2026</h1>
+        </div>
+      </div>
+      <span class="live-badge">Live</span>
+    </div>
+    <div class="last-update" id="last-update">Lade Daten…</div>
+  </header>
+
+  <nav>
+    <div class="tab active" onclick="showTab('spielplan')">Spielplan</div>
+    <div class="tab" onclick="showTab('gruppen')">Gruppen</div>
+    <div class="tab" onclick="showTab('ko')">K.O.-Runde</div>
+    <div class="tab" onclick="showTab('sieger')">Turniersieger</div>
+    <div class="tab" onclick="showTab('sponsoren')">Sponsoren</div>
+  </nav>
+
+
+
+  <!-- SPIELPLAN -->
+  <div id="tab-spielplan" class="section active">
+    <div class="schedule-filter" id="schedule-filter"></div>
+    <div id="spielplan-content">
+      <div class="loading">
+        <div class="spinner"></div>Lade Spielplan…
       </div>
     </div>
-    <span class="live-badge">Live</span>
-  </div>
-  <div class="last-update" id="last-update">Lade Daten…</div>
-</header>
-
-<nav>
-  <div class="tab active" onclick="showTab('spielplan')">Spielplan</div>
-  <div class="tab" onclick="showTab('gruppen')">Gruppen</div>
-  <div class="tab" onclick="showTab('ko')">K.O.-Runde</div>
-  <div class="tab" onclick="showTab('sieger')">Turniersieger</div>
-  <div class="tab" onclick="showTab('sponsoren')">Sponsoren</div>
-</nav>
-
-
-
-<!-- SPIELPLAN -->
-<div id="tab-spielplan" class="section active">
-  <div class="schedule-filter" id="schedule-filter"></div>
-  <div id="spielplan-content"><div class="loading"><div class="spinner"></div>Lade Spielplan…</div></div>
-</div>
-
-<!-- GRUPPEN -->
-<div id="tab-gruppen" class="section">
-  <div id="gruppen-content"><div class="loading"><div class="spinner"></div>Lade Gruppen…</div></div>
-</div>
-
-<!-- KO RUNDE -->
-<div id="tab-ko" class="section">
-  <div id="ko-content"><div class="loading"><div class="spinner"></div>Lade K.O.-Runde…</div></div>
-</div>
-
-<!-- TURNIERSIEGER -->
-<div id="tab-sieger" class="section">
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8b949e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #30363d;">Lothar-Schubert-Gedächtnisturnier · seit 1985</div>
-  <div class="card">
-    <div class="card-header"><h3>Alle Turniersieger</h3></div>
-    <table style="width:100%;border-collapse:collapse;">
-      <tbody id="sieger-table">
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- SPONSOREN -->
-<div id="tab-sponsoren" class="section">
-  <div style="text-align:center;padding:8px 0 20px;">
-    <img src="logos/sv_prag_logo.png" alt="SV Prag" style="height:54px;width:auto;display:block;margin:0 auto 8px;">
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px;">
-    <a href="https://www.kolping-bildungswerk.de/" target="_blank" class="sponsor-card">
-      <img src="logos/sponsor_kolping_bildung.jpg" alt="Kolping Bildungswerk" style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
-    </a>
-    <a href="https://www.ev-heimstiftung.de/besigheim-robert-breuning-stift/" target="_blank" class="sponsor-card">
-      <img src="logos/sponsor_robert_breuning.png" alt="Robert Breuning Stiftung" style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
-    </a>
-    <a href="https://platz-meister.de/" target="_blank" class="sponsor-card">
-      <img src="logos/sponsor_platzmeister.png" alt="Platzmeister" style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
-    </a>
-    <a href="https://www.molline.de/" target="_blank" class="sponsor-card">
-      <img src="logos/sponsor_wdv_molline.jpg" alt="Molline" style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
-    </a>
-    <a href="https://www.bw-partner.com/de/" target="_blank" class="sponsor-card">
-      <img src="logos/sponsor_bw_partner.png" alt="BW Partner" style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
-    </a>
-    <a href="https://www.behr-einrichtung.de/flexform-flagship-store-stuttgart/" target="_blank" class="sponsor-card">
-      <img src="logos/sponsor_flexform.jpg" alt="Flexform" style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
-    </a>
-    <a href="https://tauberquelle-stuttgart.de/" target="_blank" class="sponsor-card">
-      <img src="logos/sponsor_tauberquelle.png" alt="Tauberquelle" style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
-    </a>
-    <a href="https://www.goeckelesmaier.de/de/home.html" target="_blank" class="sponsor-card">
-      <img src="logos/sponsor_goeckelesmaier.png" alt="Göckelesmaier" style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
-    </a>
+  <!-- GRUPPEN -->
+  <div id="tab-gruppen" class="section">
+    <div id="gruppen-content">
+      <div class="loading">
+        <div class="spinner"></div>Lade Gruppen…
+      </div>
+    </div>
   </div>
 
-  <div style="background:rgba(31,111,235,0.08);border:1px solid rgba(31,111,235,0.25);border-radius:8px;padding:14px;font-size:13px;color:#8b949e;text-align:center;margin-top:8px;">
-    Interesse als Sponsor? Kontakt: <a href="/cdn-cgi/l/email-protection#c6b5b6a9a8b5a9b4a3a886b5b0b6b4a7a1e8a2a3" style="color:#79c0ff;"><span class="__cf_email__" data-cfemail="0e7d7e61607d617c6b604e7d787e7c6f69206a6b">[email&#160;protected]</span></a>
+  <!-- KO RUNDE -->
+  <div id="tab-ko" class="section">
+    <div id="ko-content">
+      <div class="loading">
+        <div class="spinner"></div>Lade K.O.-Runde…
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- TURNIERSIEGER -->
+  <div id="tab-sieger" class="section">
+    <div
+      style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8b949e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #30363d;">
+      Lothar-Schubert-Gedächtnisturnier · seit 1985</div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Alle Turniersieger</h3>
+      </div>
+      <table style="width:100%;border-collapse:collapse;">
+        <tbody id="sieger-table">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SPONSOREN -->
+  <div id="tab-sponsoren" class="section">
+    <div style="text-align:center;padding:8px 0 20px;">
+      <img src="logos/sv_prag_logo.png" alt="SV Prag" style="height:54px;width:auto;display:block;margin:0 auto 8px;">
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px;">
+      <a href="https://www.kolping-bildungswerk.de/" target="_blank" class="sponsor-card">
+        <img src="logos/sponsor_kolping_bildung.jpg" alt="Kolping Bildungswerk"
+          style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
+      </a>
+      <a href="https://www.ev-heimstiftung.de/besigheim-robert-breuning-stift/" target="_blank" class="sponsor-card">
+        <img src="logos/sponsor_robert_breuning.png" alt="Robert Breuning Stiftung"
+          style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
+      </a>
+      <a href="https://platz-meister.de/" target="_blank" class="sponsor-card">
+        <img src="logos/sponsor_platzmeister.png" alt="Platzmeister"
+          style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
+      </a>
+      <a href="https://www.molline.de/" target="_blank" class="sponsor-card">
+        <img src="logos/sponsor_wdv_molline.jpg" alt="Molline"
+          style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
+      </a>
+      <a href="https://www.bw-partner.com/de/" target="_blank" class="sponsor-card">
+        <img src="logos/sponsor_bw_partner.png" alt="BW Partner"
+          style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
+      </a>
+      <a href="https://www.behr-einrichtung.de/flexform-flagship-store-stuttgart/" target="_blank" class="sponsor-card">
+        <img src="logos/sponsor_flexform.jpg" alt="Flexform"
+          style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
+      </a>
+      <a href="https://tauberquelle-stuttgart.de/" target="_blank" class="sponsor-card">
+        <img src="logos/sponsor_tauberquelle.png" alt="Tauberquelle"
+          style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
+      </a>
+      <a href="https://www.goeckelesmaier.de/de/home.html" target="_blank" class="sponsor-card">
+        <img src="logos/sponsor_goeckelesmaier.png" alt="Göckelesmaier"
+          style="max-width:100%;max-height:55px;width:auto;object-fit:contain;">
+      </a>
+    </div>
+
+    <div
+      style="background:rgba(31,111,235,0.08);border:1px solid rgba(31,111,235,0.25);border-radius:8px;padding:14px;font-size:13px;color:#8b949e;text-align:center;margin-top:8px;">
+      Interesse als Sponsor? Kontakt: <a href="/cdn-cgi/l/email-protection#c6b5b6a9a8b5a9b4a3a886b5b0b6b4a7a1e8a2a3"
+        style="color:#79c0ff;"><span class="__cf_email__"
+          data-cfemail="0e7d7e61607d617c6b604e7d787e7c6f69206a6b">[email&#160;protected]</span></a>
+    </div>
+  </div>
 
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ============================================================
-// CONFIG
-// ============================================================
-let SHEET_ID = localStorage.getItem('turnier_sheet_id') || '19AAZoyS_AON0OE3K1e1erVyteMHo_cLN';
-let tournamentData = { matches: [], teams: [] };
-let activeFilter = 'alle';
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
+    // ============================================================
+    // CONFIG
+    // ============================================================
+    let SHEET_ID = localStorage.getItem('turnier_sheet_id') || '19AAZoyS_AON0OE3K1e1erVyteMHo_cLN';
+    let tournamentData = { matches: [], teams: [] };
+    let activeFilter = 'alle';
 
-// ============================================================
-// INIT
-// ============================================================
-window.addEventListener('load', () => {
-  if (SHEET_ID) {
-    document.getElementById('sheet-id-input').value = SHEET_ID;
-    fetchSheetData();
-  } else {
-    document.getElementById('config-banner').classList.add('visible');
-    loadDemoData();
-  }
-  setInterval(() => {
-    if (SHEET_ID) fetchSheetData();
-  }, 60000);
-});
-
-// ============================================================
-// GOOGLE SHEETS FETCH (CSV approach - no API key needed)
-// ============================================================
-async function fetchSheetData() {
-  try {
-    const [matchesCSV, teamsCSV] = await Promise.all([
-      fetchCSV(SHEET_ID, 'Spiele'),
-      fetchCSV(SHEET_ID, 'Mannschaften')
-    ]);
-    tournamentData.matches = parseCSV(matchesCSV, ['SpielID','Runde','Gruppe','Platz','Uhrzeit','Team1','Team2','Tore1','Tore2','Status']);
-    tournamentData.teams = parseCSV(teamsCSV, ['Name','Gruppe','Emoji']);
-    updateLastUpdate();
-    renderAll();
-
-  } catch(e) {
-
-  }
-}
-
-async function fetchCSV(sheetId, sheetName) {
-  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('fetch failed');
-  return res.text();
-}
-
-function parseCSV(csv, headers) {
-  const lines = csv.trim().split('\n').slice(1); // skip header row
-  return lines.map(line => {
-    const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
-    const obj = {};
-    headers.forEach((h, i) => {
-      obj[h] = (cols[i] || '').replace(/^"|"$/g, '').trim();
+    // ============================================================
+    // INIT
+    // ============================================================
+    window.addEventListener('load', () => {
+      if (SHEET_ID) {
+        document.getElementById('sheet-id-input').value = SHEET_ID;
+        fetchSheetData();
+      } else {
+        document.getElementById('config-banner').classList.add('visible');
+        loadDemoData();
+      }
+      setInterval(() => {
+        if (SHEET_ID) fetchSheetData();
+      }, 60000);
     });
-    return obj;
-  }).filter(r => r[headers[0]]);
-}
 
-function saveSheetId() {
-  const val = document.getElementById('sheet-id-input').value.trim();
-  if (!val) return;
-  SHEET_ID = val;
-  localStorage.setItem('turnier_sheet_id', val);
-  document.getElementById('connection-status').textContent = 'Verbinde…';
-  fetchSheetData();
-}
+    // ============================================================
+    // GOOGLE SHEETS FETCH (CSV approach - no API key needed)
+    // ============================================================
+    async function fetchSheetData() {
+      try {
+        const [matchesCSV, teamsCSV] = await Promise.all([
+          fetchCSV(SHEET_ID, 'Spiele'),
+          fetchCSV(SHEET_ID, 'Mannschaften')
+        ]);
+        tournamentData.matches = parseCSV(matchesCSV, ['SpielID', 'Runde', 'Gruppe', 'Platz', 'Uhrzeit', 'Team1', 'Team2', 'Tore1', 'Tore2', 'Status']);
+        tournamentData.teams = parseCSV(teamsCSV, ['Name', 'Gruppe', 'Emoji']);
+        updateLastUpdate();
+        renderAll();
 
-function updateLastUpdate() {
-  const now = new Date();
-  document.getElementById('last-update').textContent =
-    `Aktualisiert: ${now.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'})} Uhr`;
-}
+      } catch (e) {
 
-// ============================================================
-// DEMO DATA (EM 2024 style)
-// ============================================================
-function loadDemoData() {
-  tournamentData.teams = [
-    {Name:'Team A1',Gruppe:'A',Emoji:''},
-    {Name:'Team A2',Gruppe:'A',Emoji:''},
-    {Name:'Team A3',Gruppe:'A',Emoji:''},
-    {Name:'Team A4',Gruppe:'A',Emoji:''},
-    {Name:'Team B1',Gruppe:'B',Emoji:''},
-    {Name:'Team B2',Gruppe:'B',Emoji:''},
-    {Name:'Team B3',Gruppe:'B',Emoji:''},
-    {Name:'Team B4',Gruppe:'B',Emoji:''},
-    {Name:'Team C1',Gruppe:'C',Emoji:''},
-    {Name:'Team C2',Gruppe:'C',Emoji:''},
-    {Name:'Team C3',Gruppe:'C',Emoji:''},
-    {Name:'Team C4',Gruppe:'C',Emoji:''},
-    {Name:'Team D1',Gruppe:'D',Emoji:''},
-    {Name:'Team D2',Gruppe:'D',Emoji:''},
-    {Name:'Team D3',Gruppe:'D',Emoji:''},
-    {Name:'Team D4',Gruppe:'D',Emoji:''},
-    {Name:'Team E1',Gruppe:'E',Emoji:''},
-    {Name:'Team E2',Gruppe:'E',Emoji:''},
-    {Name:'Team E3',Gruppe:'E',Emoji:''},
-    {Name:'Team E4',Gruppe:'E',Emoji:''},
-    {Name:'Team F1',Gruppe:'F',Emoji:''},
-    {Name:'Team F2',Gruppe:'F',Emoji:''},
-    {Name:'Team F3',Gruppe:'F',Emoji:''},
-    {Name:'Team F4',Gruppe:'F',Emoji:''},
-  ];
+      }
+    }
 
-  tournamentData.matches = [
-    // Gruppenspiele
-    {SpielID:'1',Runde:'Gruppe',Gruppe:'A',Platz:'Platz 1',Uhrzeit:'10:00',Team1:'Team A1',Team2:'Team A2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'2',Runde:'Gruppe',Gruppe:'A',Platz:'Platz 2',Uhrzeit:'10:00',Team1:'Team A3',Team2:'Team A4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'3',Runde:'Gruppe',Gruppe:'B',Platz:'Platz 1',Uhrzeit:'10:15',Team1:'Team B1',Team2:'Team B2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'4',Runde:'Gruppe',Gruppe:'B',Platz:'Platz 2',Uhrzeit:'10:15',Team1:'Team B3',Team2:'Team B4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'5',Runde:'Gruppe',Gruppe:'C',Platz:'Platz 1',Uhrzeit:'10:30',Team1:'Team C1',Team2:'Team C2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'6',Runde:'Gruppe',Gruppe:'C',Platz:'Platz 2',Uhrzeit:'10:30',Team1:'Team C3',Team2:'Team C4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'7',Runde:'Gruppe',Gruppe:'D',Platz:'Platz 1',Uhrzeit:'10:45',Team1:'Team D1',Team2:'Team D2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'8',Runde:'Gruppe',Gruppe:'D',Platz:'Platz 2',Uhrzeit:'10:45',Team1:'Team D3',Team2:'Team D4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'9',Runde:'Gruppe',Gruppe:'E',Platz:'Platz 1',Uhrzeit:'11:00',Team1:'Team E1',Team2:'Team E2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'10',Runde:'Gruppe',Gruppe:'E',Platz:'Platz 2',Uhrzeit:'11:00',Team1:'Team E3',Team2:'Team E4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'11',Runde:'Gruppe',Gruppe:'F',Platz:'Platz 1',Uhrzeit:'11:15',Team1:'Team F1',Team2:'Team F2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'12',Runde:'Gruppe',Gruppe:'F',Platz:'Platz 2',Uhrzeit:'11:15',Team1:'Team F3',Team2:'Team F4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'13',Runde:'Gruppe',Gruppe:'A',Platz:'Platz 1',Uhrzeit:'11:30',Team1:'Team A1',Team2:'Team A3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'14',Runde:'Gruppe',Gruppe:'A',Platz:'Platz 2',Uhrzeit:'11:30',Team1:'Team A2',Team2:'Team A4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'15',Runde:'Gruppe',Gruppe:'B',Platz:'Platz 1',Uhrzeit:'11:45',Team1:'Team B1',Team2:'Team B3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'16',Runde:'Gruppe',Gruppe:'B',Platz:'Platz 2',Uhrzeit:'11:45',Team1:'Team B2',Team2:'Team B4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'17',Runde:'Gruppe',Gruppe:'C',Platz:'Platz 1',Uhrzeit:'12:00',Team1:'Team C1',Team2:'Team C3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'18',Runde:'Gruppe',Gruppe:'C',Platz:'Platz 2',Uhrzeit:'12:00',Team1:'Team C2',Team2:'Team C4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'19',Runde:'Gruppe',Gruppe:'D',Platz:'Platz 1',Uhrzeit:'12:15',Team1:'Team D1',Team2:'Team D3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'20',Runde:'Gruppe',Gruppe:'D',Platz:'Platz 2',Uhrzeit:'12:15',Team1:'Team D2',Team2:'Team D4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'21',Runde:'Gruppe',Gruppe:'E',Platz:'Platz 1',Uhrzeit:'12:30',Team1:'Team E1',Team2:'Team E3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'22',Runde:'Gruppe',Gruppe:'E',Platz:'Platz 2',Uhrzeit:'12:30',Team1:'Team E2',Team2:'Team E4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'23',Runde:'Gruppe',Gruppe:'F',Platz:'Platz 1',Uhrzeit:'12:45',Team1:'Team F1',Team2:'Team F3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'24',Runde:'Gruppe',Gruppe:'F',Platz:'Platz 2',Uhrzeit:'12:45',Team1:'Team F2',Team2:'Team F4',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'25',Runde:'Gruppe',Gruppe:'A',Platz:'Platz 1',Uhrzeit:'13:00',Team1:'Team A4',Team2:'Team A1',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'26',Runde:'Gruppe',Gruppe:'A',Platz:'Platz 2',Uhrzeit:'13:00',Team1:'Team A2',Team2:'Team A3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'27',Runde:'Gruppe',Gruppe:'B',Platz:'Platz 1',Uhrzeit:'13:15',Team1:'Team B4',Team2:'Team B1',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'28',Runde:'Gruppe',Gruppe:'B',Platz:'Platz 2',Uhrzeit:'13:15',Team1:'Team B2',Team2:'Team B3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'29',Runde:'Gruppe',Gruppe:'C',Platz:'Platz 1',Uhrzeit:'13:30',Team1:'Team C4',Team2:'Team C1',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'30',Runde:'Gruppe',Gruppe:'C',Platz:'Platz 2',Uhrzeit:'13:30',Team1:'Team C2',Team2:'Team C3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'31',Runde:'Gruppe',Gruppe:'D',Platz:'Platz 1',Uhrzeit:'13:45',Team1:'Team D4',Team2:'Team D1',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'32',Runde:'Gruppe',Gruppe:'D',Platz:'Platz 2',Uhrzeit:'13:45',Team1:'Team D2',Team2:'Team D3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'33',Runde:'Gruppe',Gruppe:'E',Platz:'Platz 1',Uhrzeit:'14:00',Team1:'Team E4',Team2:'Team E1',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'34',Runde:'Gruppe',Gruppe:'E',Platz:'Platz 2',Uhrzeit:'14:00',Team1:'Team E2',Team2:'Team E3',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'35',Runde:'Gruppe',Gruppe:'F',Platz:'Platz 1',Uhrzeit:'14:15',Team1:'Team F4',Team2:'Team F1',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'36',Runde:'Gruppe',Gruppe:'F',Platz:'Platz 2',Uhrzeit:'14:15',Team1:'Team F2',Team2:'Team F3',Tore1:'',Tore2:'',Status:'geplant'},
-    // Achtelfinale
-    {SpielID:'37',Runde:'Achtelfinale',Gruppe:'',Platz:'Platz 1',Uhrzeit:'15:15',Team1:'Sieger B2',Team2:'Sieger A2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'38',Runde:'Achtelfinale',Gruppe:'',Platz:'Platz 2',Uhrzeit:'15:15',Team1:'Sieger A1',Team2:'Sieger C2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'39',Runde:'Achtelfinale',Gruppe:'',Platz:'Platz 1',Uhrzeit:'15:30',Team1:'Sieger C1',Team2:'3.Bester Dritter',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'40',Runde:'Achtelfinale',Gruppe:'',Platz:'Platz 2',Uhrzeit:'15:30',Team1:'Sieger B1',Team2:'2.Bester Dritter',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'41',Runde:'Achtelfinale',Gruppe:'',Platz:'Platz 1',Uhrzeit:'15:45',Team1:'Sieger D2',Team2:'Sieger E2',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'42',Runde:'Achtelfinale',Gruppe:'',Platz:'Platz 2',Uhrzeit:'15:45',Team1:'Sieger F1',Team2:'4.Bester Dritter',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'43',Runde:'Achtelfinale',Gruppe:'',Platz:'Platz 1',Uhrzeit:'16:00',Team1:'Sieger E1',Team2:'1.Bester Dritter',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'44',Runde:'Achtelfinale',Gruppe:'',Platz:'Platz 2',Uhrzeit:'16:00',Team1:'Sieger D1',Team2:'Sieger F2',Tore1:'',Tore2:'',Status:'geplant'},
-    // Viertelfinale
-    {SpielID:'45',Runde:'Viertelfinale',Gruppe:'',Platz:'Platz 1',Uhrzeit:'16:20',Team1:'Sieger AF37',Team2:'Sieger AF39',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'46',Runde:'Viertelfinale',Gruppe:'',Platz:'Platz 2',Uhrzeit:'16:20',Team1:'Sieger AF38',Team2:'Sieger AF40',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'47',Runde:'Viertelfinale',Gruppe:'',Platz:'Platz 1',Uhrzeit:'16:35',Team1:'Sieger AF41',Team2:'Sieger AF43',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'48',Runde:'Viertelfinale',Gruppe:'',Platz:'Platz 2',Uhrzeit:'16:35',Team1:'Sieger AF42',Team2:'Sieger AF44',Tore1:'',Tore2:'',Status:'geplant'},
-    // Halbfinale
-    {SpielID:'49',Runde:'Halbfinale',Gruppe:'',Platz:'Platz 1',Uhrzeit:'16:40',Team1:'Sieger VF45',Team2:'Sieger VF46',Tore1:'',Tore2:'',Status:'geplant'},
-    {SpielID:'50',Runde:'Halbfinale',Gruppe:'',Platz:'Platz 2',Uhrzeit:'16:40',Team1:'Sieger VF47',Team2:'Sieger VF48',Tore1:'',Tore2:'',Status:'geplant'},
-    // Spiel um Platz 3
-    {SpielID:'51',Runde:'Spiel um Platz 3',Gruppe:'',Platz:'Platz 1',Uhrzeit:'17:00',Team1:'Verlierer HF49',Team2:'Verlierer HF50',Tore1:'',Tore2:'',Status:'geplant'},
-    // Finale
-    {SpielID:'52',Runde:'Finale',Gruppe:'',Platz:'Platz 1',Uhrzeit:'17:20',Team1:'Sieger HF49',Team2:'Sieger HF50',Tore1:'',Tore2:'',Status:'geplant'},
-  ];
+    async function fetchCSV(sheetId, sheetName) {
+      const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('fetch failed');
+      return res.text();
+    }
 
-  updateLastUpdate();
-  renderAll();
-}
+    function parseCSV(csv, headers) {
+      const lines = csv.trim().split('\n').slice(1); // skip header row
+      return lines.map(line => {
+        const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
+        const obj = {};
+        headers.forEach((h, i) => {
+          obj[h] = (cols[i] || '').replace(/^"|"$/g, '').trim();
+        });
+        return obj;
+      }).filter(r => r[headers[0]]);
+    }
 
-// ============================================================
-// RENDER ALL
-// ============================================================
-function renderAll() {
-  renderSpielplan();
-  renderGruppen();
-  renderKO();
-}
+    function saveSheetId() {
+      const val = document.getElementById('sheet-id-input').value.trim();
+      if (!val) return;
+      SHEET_ID = val;
+      localStorage.setItem('turnier_sheet_id', val);
+      document.getElementById('connection-status').textContent = 'Verbinde…';
+      fetchSheetData();
+    }
 
-// ============================================================
-// SPIELPLAN
-// ============================================================
-function renderSpielplan() {
-  const matches = tournamentData.matches;
-  const rounds = ['alle', ...new Set(matches.map(m => m.Runde))];
-  const fields = ['Alle Plätze', 'Platz 1', 'Platz 2'];
+    function updateLastUpdate() {
+      const now = new Date();
+      document.getElementById('last-update').textContent =
+        `Aktualisiert: ${now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} Uhr`;
+    }
 
-  // Filter buttons
-  const filterEl = document.getElementById('schedule-filter');
-  filterEl.innerHTML = '';
-  ['alle','Gruppe','Achtelfinale','Viertelfinale','Halbfinale','Spiel um Platz 3','Finale'].forEach(r => {
-    if (!matches.find(m => m.Runde === r) && r !== 'alle') return;
-    const btn = document.createElement('div');
-    btn.className = 'filter-btn' + (activeFilter === r ? ' active' : '');
-    btn.textContent = r === 'alle' ? 'Alle' : r;
-    btn.onclick = () => { activeFilter = r; renderSpielplan(); };
-    filterEl.appendChild(btn);
-  });
+    // ============================================================
+    // DEMO DATA (EM 2024 style)
+    // ============================================================
+    function loadDemoData() {
+      tournamentData.teams = [
+        { Name: 'Team A1', Gruppe: 'A', Emoji: '' },
+        { Name: 'Team A2', Gruppe: 'A', Emoji: '' },
+        { Name: 'Team A3', Gruppe: 'A', Emoji: '' },
+        { Name: 'Team A4', Gruppe: 'A', Emoji: '' },
+        { Name: 'Team B1', Gruppe: 'B', Emoji: '' },
+        { Name: 'Team B2', Gruppe: 'B', Emoji: '' },
+        { Name: 'Team B3', Gruppe: 'B', Emoji: '' },
+        { Name: 'Team B4', Gruppe: 'B', Emoji: '' },
+        { Name: 'Team C1', Gruppe: 'C', Emoji: '' },
+        { Name: 'Team C2', Gruppe: 'C', Emoji: '' },
+        { Name: 'Team C3', Gruppe: 'C', Emoji: '' },
+        { Name: 'Team C4', Gruppe: 'C', Emoji: '' },
+        { Name: 'Team D1', Gruppe: 'D', Emoji: '' },
+        { Name: 'Team D2', Gruppe: 'D', Emoji: '' },
+        { Name: 'Team D3', Gruppe: 'D', Emoji: '' },
+        { Name: 'Team D4', Gruppe: 'D', Emoji: '' },
+        { Name: 'Team E1', Gruppe: 'E', Emoji: '' },
+        { Name: 'Team E2', Gruppe: 'E', Emoji: '' },
+        { Name: 'Team E3', Gruppe: 'E', Emoji: '' },
+        { Name: 'Team E4', Gruppe: 'E', Emoji: '' },
+        { Name: 'Team F1', Gruppe: 'F', Emoji: '' },
+        { Name: 'Team F2', Gruppe: 'F', Emoji: '' },
+        { Name: 'Team F3', Gruppe: 'F', Emoji: '' },
+        { Name: 'Team F4', Gruppe: 'F', Emoji: '' },
+      ];
 
-  const filtered = activeFilter === 'alle' ? matches : matches.filter(m => m.Runde === activeFilter);
-  const container = document.getElementById('spielplan-content');
+      tournamentData.matches = [
+        // Gruppenspiele
+        { SpielID: '1', Runde: 'Gruppe', Gruppe: 'A', Platz: 'Platz 1', Uhrzeit: '10:00', Team1: 'Team A1', Team2: 'Team A2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '2', Runde: 'Gruppe', Gruppe: 'A', Platz: 'Platz 2', Uhrzeit: '10:00', Team1: 'Team A3', Team2: 'Team A4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '3', Runde: 'Gruppe', Gruppe: 'B', Platz: 'Platz 1', Uhrzeit: '10:15', Team1: 'Team B1', Team2: 'Team B2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '4', Runde: 'Gruppe', Gruppe: 'B', Platz: 'Platz 2', Uhrzeit: '10:15', Team1: 'Team B3', Team2: 'Team B4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '5', Runde: 'Gruppe', Gruppe: 'C', Platz: 'Platz 1', Uhrzeit: '10:30', Team1: 'Team C1', Team2: 'Team C2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '6', Runde: 'Gruppe', Gruppe: 'C', Platz: 'Platz 2', Uhrzeit: '10:30', Team1: 'Team C3', Team2: 'Team C4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '7', Runde: 'Gruppe', Gruppe: 'D', Platz: 'Platz 1', Uhrzeit: '10:45', Team1: 'Team D1', Team2: 'Team D2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '8', Runde: 'Gruppe', Gruppe: 'D', Platz: 'Platz 2', Uhrzeit: '10:45', Team1: 'Team D3', Team2: 'Team D4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '9', Runde: 'Gruppe', Gruppe: 'E', Platz: 'Platz 1', Uhrzeit: '11:00', Team1: 'Team E1', Team2: 'Team E2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '10', Runde: 'Gruppe', Gruppe: 'E', Platz: 'Platz 2', Uhrzeit: '11:00', Team1: 'Team E3', Team2: 'Team E4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '11', Runde: 'Gruppe', Gruppe: 'F', Platz: 'Platz 1', Uhrzeit: '11:15', Team1: 'Team F1', Team2: 'Team F2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '12', Runde: 'Gruppe', Gruppe: 'F', Platz: 'Platz 2', Uhrzeit: '11:15', Team1: 'Team F3', Team2: 'Team F4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '13', Runde: 'Gruppe', Gruppe: 'A', Platz: 'Platz 1', Uhrzeit: '11:30', Team1: 'Team A1', Team2: 'Team A3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '14', Runde: 'Gruppe', Gruppe: 'A', Platz: 'Platz 2', Uhrzeit: '11:30', Team1: 'Team A2', Team2: 'Team A4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '15', Runde: 'Gruppe', Gruppe: 'B', Platz: 'Platz 1', Uhrzeit: '11:45', Team1: 'Team B1', Team2: 'Team B3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '16', Runde: 'Gruppe', Gruppe: 'B', Platz: 'Platz 2', Uhrzeit: '11:45', Team1: 'Team B2', Team2: 'Team B4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '17', Runde: 'Gruppe', Gruppe: 'C', Platz: 'Platz 1', Uhrzeit: '12:00', Team1: 'Team C1', Team2: 'Team C3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '18', Runde: 'Gruppe', Gruppe: 'C', Platz: 'Platz 2', Uhrzeit: '12:00', Team1: 'Team C2', Team2: 'Team C4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '19', Runde: 'Gruppe', Gruppe: 'D', Platz: 'Platz 1', Uhrzeit: '12:15', Team1: 'Team D1', Team2: 'Team D3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '20', Runde: 'Gruppe', Gruppe: 'D', Platz: 'Platz 2', Uhrzeit: '12:15', Team1: 'Team D2', Team2: 'Team D4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '21', Runde: 'Gruppe', Gruppe: 'E', Platz: 'Platz 1', Uhrzeit: '12:30', Team1: 'Team E1', Team2: 'Team E3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '22', Runde: 'Gruppe', Gruppe: 'E', Platz: 'Platz 2', Uhrzeit: '12:30', Team1: 'Team E2', Team2: 'Team E4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '23', Runde: 'Gruppe', Gruppe: 'F', Platz: 'Platz 1', Uhrzeit: '12:45', Team1: 'Team F1', Team2: 'Team F3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '24', Runde: 'Gruppe', Gruppe: 'F', Platz: 'Platz 2', Uhrzeit: '12:45', Team1: 'Team F2', Team2: 'Team F4', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '25', Runde: 'Gruppe', Gruppe: 'A', Platz: 'Platz 1', Uhrzeit: '13:00', Team1: 'Team A4', Team2: 'Team A1', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '26', Runde: 'Gruppe', Gruppe: 'A', Platz: 'Platz 2', Uhrzeit: '13:00', Team1: 'Team A2', Team2: 'Team A3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '27', Runde: 'Gruppe', Gruppe: 'B', Platz: 'Platz 1', Uhrzeit: '13:15', Team1: 'Team B4', Team2: 'Team B1', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '28', Runde: 'Gruppe', Gruppe: 'B', Platz: 'Platz 2', Uhrzeit: '13:15', Team1: 'Team B2', Team2: 'Team B3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '29', Runde: 'Gruppe', Gruppe: 'C', Platz: 'Platz 1', Uhrzeit: '13:30', Team1: 'Team C4', Team2: 'Team C1', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '30', Runde: 'Gruppe', Gruppe: 'C', Platz: 'Platz 2', Uhrzeit: '13:30', Team1: 'Team C2', Team2: 'Team C3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '31', Runde: 'Gruppe', Gruppe: 'D', Platz: 'Platz 1', Uhrzeit: '13:45', Team1: 'Team D4', Team2: 'Team D1', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '32', Runde: 'Gruppe', Gruppe: 'D', Platz: 'Platz 2', Uhrzeit: '13:45', Team1: 'Team D2', Team2: 'Team D3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '33', Runde: 'Gruppe', Gruppe: 'E', Platz: 'Platz 1', Uhrzeit: '14:00', Team1: 'Team E4', Team2: 'Team E1', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '34', Runde: 'Gruppe', Gruppe: 'E', Platz: 'Platz 2', Uhrzeit: '14:00', Team1: 'Team E2', Team2: 'Team E3', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '35', Runde: 'Gruppe', Gruppe: 'F', Platz: 'Platz 1', Uhrzeit: '14:15', Team1: 'Team F4', Team2: 'Team F1', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '36', Runde: 'Gruppe', Gruppe: 'F', Platz: 'Platz 2', Uhrzeit: '14:15', Team1: 'Team F2', Team2: 'Team F3', Tore1: '', Tore2: '', Status: 'geplant' },
+        // Achtelfinale
+        { SpielID: '37', Runde: 'Achtelfinale', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '15:15', Team1: 'Sieger B2', Team2: 'Sieger A2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '38', Runde: 'Achtelfinale', Gruppe: '', Platz: 'Platz 2', Uhrzeit: '15:15', Team1: 'Sieger A1', Team2: 'Sieger C2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '39', Runde: 'Achtelfinale', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '15:30', Team1: 'Sieger C1', Team2: '3.Bester Dritter', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '40', Runde: 'Achtelfinale', Gruppe: '', Platz: 'Platz 2', Uhrzeit: '15:30', Team1: 'Sieger B1', Team2: '2.Bester Dritter', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '41', Runde: 'Achtelfinale', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '15:45', Team1: 'Sieger D2', Team2: 'Sieger E2', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '42', Runde: 'Achtelfinale', Gruppe: '', Platz: 'Platz 2', Uhrzeit: '15:45', Team1: 'Sieger F1', Team2: '4.Bester Dritter', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '43', Runde: 'Achtelfinale', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '16:00', Team1: 'Sieger E1', Team2: '1.Bester Dritter', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '44', Runde: 'Achtelfinale', Gruppe: '', Platz: 'Platz 2', Uhrzeit: '16:00', Team1: 'Sieger D1', Team2: 'Sieger F2', Tore1: '', Tore2: '', Status: 'geplant' },
+        // Viertelfinale
+        { SpielID: '45', Runde: 'Viertelfinale', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '16:20', Team1: 'Sieger AF37', Team2: 'Sieger AF39', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '46', Runde: 'Viertelfinale', Gruppe: '', Platz: 'Platz 2', Uhrzeit: '16:20', Team1: 'Sieger AF38', Team2: 'Sieger AF40', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '47', Runde: 'Viertelfinale', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '16:35', Team1: 'Sieger AF41', Team2: 'Sieger AF43', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '48', Runde: 'Viertelfinale', Gruppe: '', Platz: 'Platz 2', Uhrzeit: '16:35', Team1: 'Sieger AF42', Team2: 'Sieger AF44', Tore1: '', Tore2: '', Status: 'geplant' },
+        // Halbfinale
+        { SpielID: '49', Runde: 'Halbfinale', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '16:40', Team1: 'Sieger VF45', Team2: 'Sieger VF46', Tore1: '', Tore2: '', Status: 'geplant' },
+        { SpielID: '50', Runde: 'Halbfinale', Gruppe: '', Platz: 'Platz 2', Uhrzeit: '16:40', Team1: 'Sieger VF47', Team2: 'Sieger VF48', Tore1: '', Tore2: '', Status: 'geplant' },
+        // Spiel um Platz 3
+        { SpielID: '51', Runde: 'Spiel um Platz 3', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '17:00', Team1: 'Verlierer HF49', Team2: 'Verlierer HF50', Tore1: '', Tore2: '', Status: 'geplant' },
+        // Finale
+        { SpielID: '52', Runde: 'Finale', Gruppe: '', Platz: 'Platz 1', Uhrzeit: '17:20', Team1: 'Sieger HF49', Team2: 'Sieger HF50', Tore1: '', Tore2: '', Status: 'geplant' },
+      ];
 
-  if (!filtered.length) { container.innerHTML = '<div class="loading">Keine Spiele gefunden</div>'; return; }
+      updateLastUpdate();
+      renderAll();
+    }
 
-  // Find next upcoming match
-  const nextMatch = matches.find(m => m.Status === 'geplant' || m.Status === 'läuft');
+    // ============================================================
+    // RENDER ALL
+    // ============================================================
+    function renderAll() {
+      renderSpielplan();
+      renderGruppen();
+      renderKO();
+    }
 
-  // Group by date
-  const byDate = {};
-  filtered.forEach(m => {
-    const key = '14. Mai 2026';
-    if (!byDate[key]) byDate[key] = [];
-    byDate[key].push(m);
-  });
+    // ============================================================
+    // SPIELPLAN
+    // ============================================================
+    function renderSpielplan() {
+      const matches = tournamentData.matches;
+      const rounds = ['alle', ...new Set(matches.map(m => m.Runde))];
+      const fields = ['Alle Plätze', 'Platz 1', 'Platz 2'];
 
-  let html = '';
+      // Filter buttons
+      const filterEl = document.getElementById('schedule-filter');
+      filterEl.innerHTML = '';
+      ['alle', 'Gruppe', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Spiel um Platz 3', 'Finale'].forEach(r => {
+        if (!matches.find(m => m.Runde === r) && r !== 'alle') return;
+        const btn = document.createElement('div');
+        btn.className = 'filter-btn' + (activeFilter === r ? ' active' : '');
+        btn.textContent = r === 'alle' ? 'Alle' : r;
+        btn.onclick = () => { activeFilter = r; renderSpielplan(); };
+        filterEl.appendChild(btn);
+      });
 
-  // Next match highlight
-  if (nextMatch && activeFilter === 'alle') {
-    const t1 = getTeam(nextMatch.Team1), t2 = getTeam(nextMatch.Team2);
-    html += `<div class="next-match-card">
+      const filtered = activeFilter === 'alle' ? matches : matches.filter(m => m.Runde === activeFilter);
+      const container = document.getElementById('spielplan-content');
+
+      if (!filtered.length) { container.innerHTML = '<div class="loading">Keine Spiele gefunden</div>'; return; }
+
+      // Find next upcoming match
+      const nextMatch = matches.find(m => m.Status === 'geplant' || m.Status === 'läuft');
+
+      // Group by date
+      const byDate = {};
+      filtered.forEach(m => {
+        const key = '14. Mai 2026';
+        if (!byDate[key]) byDate[key] = [];
+        byDate[key].push(m);
+      });
+
+      let html = '';
+
+      // Next match highlight
+      if (nextMatch && activeFilter === 'alle') {
+        const t1 = getTeam(nextMatch.Team1), t2 = getTeam(nextMatch.Team2);
+        html += `<div class="next-match-card">
       <div class="next-label">${nextMatch.Status === 'läuft' ? '⚽ Läuft gerade' : '⏱ Nächstes Spiel'}</div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
         <div style="text-align:right;flex:1;">
@@ -768,7 +975,7 @@ function renderSpielplan() {
         </div>
         <div style="text-align:center;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text2);">${nextMatch.Uhrzeit} Uhr</div>
-          <div style="font-size:11px;margin-top:4px;" class="field-tag ${nextMatch.Platz==='Platz 1'?'badge-field1':'badge-field2'}">${nextMatch.Platz}</div>
+          <div style="font-size:11px;margin-top:4px;" class="field-tag ${nextMatch.Platz === 'Platz 1' ? 'badge-field1' : 'badge-field2'}">${nextMatch.Platz}</div>
         </div>
         <div style="text-align:left;flex:1;">
           ${t2.Emoji ? `<div style="font-size:22px;">${t2.Emoji}</div>` : ''}
@@ -776,29 +983,29 @@ function renderSpielplan() {
         </div>
       </div>
     </div>`;
-  }
+      }
 
-  Object.entries(byDate).forEach(([date, dayMatches]) => {
-    html += `<div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border);">${date}</div>`;
-    html += '<div class="card">';
-    dayMatches.forEach((m, i) => {
-      html += renderMatchRow(m);
-    });
-    html += '</div>';
-  });
+      Object.entries(byDate).forEach(([date, dayMatches]) => {
+        html += `<div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border);">${date}</div>`;
+        html += '<div class="card">';
+        dayMatches.forEach((m, i) => {
+          html += renderMatchRow(m);
+        });
+        html += '</div>';
+      });
 
-  container.innerHTML = html;
-}
+      container.innerHTML = html;
+    }
 
-function renderMatchRow(m) {
-  const t1 = getTeam(m.Team1), t2 = getTeam(m.Team2);
-  const played = m.Status === 'beendet';
-  const g1 = parseInt(m.Tore1), g2 = parseInt(m.Tore2);
-  const homeWin = played && g1 > g2;
-  const awayWin = played && g2 > g1;
-  const fieldClass = m.Platz === 'Platz 1' ? 'badge-field1' : 'badge-field2';
+    function renderMatchRow(m) {
+      const t1 = getTeam(m.Team1), t2 = getTeam(m.Team2);
+      const played = m.Status === 'beendet';
+      const g1 = parseInt(m.Tore1), g2 = parseInt(m.Tore2);
+      const homeWin = played && g1 > g2;
+      const awayWin = played && g2 > g1;
+      const fieldClass = m.Platz === 'Platz 1' ? 'badge-field1' : 'badge-field2';
 
-  return `<div class="match-row ${played ? 'match-played' : 'match-pending'}">
+      return `<div class="match-row ${played ? 'match-played' : 'match-pending'}">
     <div class="team-home">
       ${t1.Emoji ? `<div class="team-flag">${t1.Emoji}</div>` : ''}
       <div class="team-name">${m.Team1}</div>
@@ -820,21 +1027,21 @@ function renderMatchRow(m) {
       <div class="team-name">${m.Team2}</div>
     </div>
   </div>`;
-}
+    }
 
-// ============================================================
-// GRUPPEN
-// ============================================================
-function renderGruppen() {
-  const groups = ['A','B','C','D','E','F'];
-  let html = '';
+    // ============================================================
+    // GRUPPEN
+    // ============================================================
+    function renderGruppen() {
+      const groups = ['A', 'B', 'C', 'D', 'E', 'F'];
+      let html = '';
 
-  groups.forEach(g => {
-    const teams = tournamentData.teams.filter(t => t.Gruppe === g);
-    if (!teams.length) return;
-    const standings = calcStandings(g);
+      groups.forEach(g => {
+        const teams = tournamentData.teams.filter(t => t.Gruppe === g);
+        if (!teams.length) return;
+        const standings = calcStandings(g);
 
-    html += `<div class="card">
+        html += `<div class="card">
       <div class="card-header">
         <h3>Gruppe ${g}</h3>
         <span style="font-size:11px;color:var(--text2);">SP · G · U · V · Tore · Pkt</span>
@@ -842,115 +1049,115 @@ function renderGruppen() {
       <table class="standings-table">
         <tbody>`;
 
-    standings.forEach((s, i) => {
-      const team = getTeam(s.name);
-      const posClass = i < 2 ? 'pos-q' : (i === 2 ? 'pos-ko' : '');
-      const posSymbol = i < 2 ? '●' : (i === 2 ? '◐' : '○');
-      html += `<tr>
-        <td style="width:28px;"><span class="pos-num ${posClass}">${i+1}</span></td>
+        standings.forEach((s, i) => {
+          const team = getTeam(s.name);
+          const posClass = i < 2 ? 'pos-q' : (i === 2 ? 'pos-ko' : '');
+          const posSymbol = i < 2 ? '●' : (i === 2 ? '◐' : '○');
+          html += `<tr>
+        <td style="width:28px;"><span class="pos-num ${posClass}">${i + 1}</span></td>
         <td class="team-col">${team.Emoji ? `<span style="margin-right:6px;">${team.Emoji}</span>` : ''} ${s.name}</td>
         <td>${s.sp}</td>
         <td>${s.g}</td>
         <td>${s.u}</td>
         <td>${s.v}</td>
         <td style="font-size:12px;">${s.tf}:${s.ta}</td>
-        <td class="pts-cell" style="color:${i<2?'var(--green-win-text)':i===2?'var(--gold)':'var(--text)'}">${s.pts}</td>
+        <td class="pts-cell" style="color:${i < 2 ? 'var(--green-win-text)' : i === 2 ? 'var(--gold)' : 'var(--text)'}">${s.pts}</td>
       </tr>`;
-    });
+        });
 
-    html += `</tbody></table>
+        html += `</tbody></table>
       <div style="padding:8px 12px;font-size:11px;color:var(--text2);display:flex;gap:12px;">
         <span><span style="color:var(--green-win-text)">●</span> Achtelfinale direkt</span>
         <span><span style="color:var(--gold)">◐</span> Evtl. als Dritter</span>
       </div>
     </div>`;
-  });
+      });
 
-  document.getElementById('gruppen-content').innerHTML = html || '<div class="loading">Keine Gruppenspiele gefunden</div>';
-}
+      document.getElementById('gruppen-content').innerHTML = html || '<div class="loading">Keine Gruppenspiele gefunden</div>';
+    }
 
-function calcStandings(group) {
-  const teams = tournamentData.teams.filter(t => t.Gruppe === group).map(t => t.Name);
-  const stats = {};
-  teams.forEach(t => { stats[t] = {name:t,sp:0,g:0,u:0,v:0,tf:0,ta:0,pts:0}; });
+    function calcStandings(group) {
+      const teams = tournamentData.teams.filter(t => t.Gruppe === group).map(t => t.Name);
+      const stats = {};
+      teams.forEach(t => { stats[t] = { name: t, sp: 0, g: 0, u: 0, v: 0, tf: 0, ta: 0, pts: 0 }; });
 
-  tournamentData.matches
-    .filter(m => m.Runde === 'Gruppe' && m.Gruppe === group && m.Status === 'beendet')
-    .forEach(m => {
-      const g1 = parseInt(m.Tore1)||0, g2 = parseInt(m.Tore2)||0;
-      if (!stats[m.Team1] || !stats[m.Team2]) return;
-      stats[m.Team1].sp++; stats[m.Team2].sp++;
-      stats[m.Team1].tf += g1; stats[m.Team1].ta += g2;
-      stats[m.Team2].tf += g2; stats[m.Team2].ta += g1;
-      if (g1 > g2) { stats[m.Team1].g++; stats[m.Team1].pts+=3; stats[m.Team2].v++; }
-      else if (g2 > g1) { stats[m.Team2].g++; stats[m.Team2].pts+=3; stats[m.Team1].v++; }
-      else { stats[m.Team1].u++; stats[m.Team1].pts++; stats[m.Team2].u++; stats[m.Team2].pts++; }
-    });
+      tournamentData.matches
+        .filter(m => m.Runde === 'Gruppe' && m.Gruppe === group && m.Status === 'beendet')
+        .forEach(m => {
+          const g1 = parseInt(m.Tore1) || 0, g2 = parseInt(m.Tore2) || 0;
+          if (!stats[m.Team1] || !stats[m.Team2]) return;
+          stats[m.Team1].sp++; stats[m.Team2].sp++;
+          stats[m.Team1].tf += g1; stats[m.Team1].ta += g2;
+          stats[m.Team2].tf += g2; stats[m.Team2].ta += g1;
+          if (g1 > g2) { stats[m.Team1].g++; stats[m.Team1].pts += 3; stats[m.Team2].v++; }
+          else if (g2 > g1) { stats[m.Team2].g++; stats[m.Team2].pts += 3; stats[m.Team1].v++; }
+          else { stats[m.Team1].u++; stats[m.Team1].pts++; stats[m.Team2].u++; stats[m.Team2].pts++; }
+        });
 
-  return Object.values(stats).sort((a,b) => b.pts-a.pts || (b.tf-b.ta)-(a.tf-a.ta) || b.tf-a.tf);
-}
+      return Object.values(stats).sort((a, b) => b.pts - a.pts || (b.tf - b.ta) - (a.tf - a.ta) || b.tf - a.tf);
+    }
 
-// ============================================================
-// K.O. RUNDE
-// ============================================================
-function renderKO() {
-  const rounds = ['Achtelfinale','Viertelfinale','Halbfinale','Spiel um Platz 3','Finale'];
-  let html = '';
+    // ============================================================
+    // K.O. RUNDE
+    // ============================================================
+    function renderKO() {
+      const rounds = ['Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Spiel um Platz 3', 'Finale'];
+      let html = '';
 
-  rounds.forEach(round => {
-    const matches = tournamentData.matches.filter(m => m.Runde === round);
-    if (!matches.length) return;
+      rounds.forEach(round => {
+        const matches = tournamentData.matches.filter(m => m.Runde === round);
+        if (!matches.length) return;
 
-    html += `<div class="ko-round-title">${round}</div>`;
-    html += '<div class="card">';
-    matches.forEach(m => { html += renderMatchRow(m); });
-    html += '</div>';
-  });
+        html += `<div class="ko-round-title">${round}</div>`;
+        html += '<div class="card">';
+        matches.forEach(m => { html += renderMatchRow(m); });
+        html += '</div>';
+      });
 
-  document.getElementById('ko-content').innerHTML = html || '<div class="loading">K.O.-Runde noch nicht gestartet</div>';
-}
+      document.getElementById('ko-content').innerHTML = html || '<div class="loading">K.O.-Runde noch nicht gestartet</div>';
+    }
 
-// ============================================================
-// HELPERS
-// ============================================================
-function getTeam(name) {
-  return tournamentData.teams.find(t => t.Name === name) || {Name: name, Gruppe:'', Emoji:'⚽'};
-}
+    // ============================================================
+    // HELPERS
+    // ============================================================
+    function getTeam(name) {
+      return tournamentData.teams.find(t => t.Name === name) || { Name: name, Gruppe: '', Emoji: '⚽' };
+    }
 
-function showTab(tab) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  event.target.classList.add('active');
-}
+    function showTab(tab) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      event.target.classList.add('active');
+    }
 
-// ============================================================
-// TURNIERSIEGER
-// ============================================================
-const siegerData = [
-  [1985,'Taylorix'],[1986,'kein Turnier (planmässig)'],[1987,'Cannstatter Zeitung'],
-  [1988,'Spitzbua'],[1989,'Cannstatter Zeitung'],[1990,'Stammtisch 88'],
-  [1991,'BWW Stuttgart'],[1992,'BW Kornwestheim'],[1993,'Lamm-Bräu'],
-  [1994,'Lamm-Bräu'],[1995,'No Fear'],[1996,'Party Animals'],
-  [1997,'BW Kornwestheim'],[1998,'BW Kornwestheim'],[1999,'Panzerknacker'],
-  [2000,'Tommy & Die Tornados'],[2001,'Tommy & Die Tornados'],[2002,'Praktizierende Christen'],
-  [2003,'FC Holzburg 05'],[2004,'Prag'],[2005,'Panzerknacker'],
-  [2006,'Praktizierende Christen'],[2007,'FC Holzburg 05'],[2008,'Prag'],
-  [2009,'Alle Teams'],[2010,'FC Holzburg 05'],[2011,'4 Maß ond a Göggele'],
-  [2012,'FC Holzburg 05'],[2013,'Hölderlin Allstars'],[2014,'H.I.C. Habitat Felicitas'],
-  [2015,'4 Maß ond a Göggele'],[2016,'H.I.C. Habitat Felicitas'],[2017,'H.I.C. Habitat Felicitas'],
-  [2018,'Praktizierende Christen'],[2019,'kein Turnier (Neubau Kabinentrakt)'],
-  [2020,'kein Turnier (Corona)'],[2021,'kein Turnier (Corona)'],[2022,'kein Turnier (Corona)'],
-  [2023,'Platzhirsch'],[2024,'MTV Allstars'],[2025,'Tivoli Govas'],
-];
+    // ============================================================
+    // TURNIERSIEGER
+    // ============================================================
+    const siegerData = [
+      [1985, 'Taylorix'], [1986, 'kein Turnier (planmässig)'], [1987, 'Cannstatter Zeitung'],
+      [1988, 'Spitzbua'], [1989, 'Cannstatter Zeitung'], [1990, 'Stammtisch 88'],
+      [1991, 'BWW Stuttgart'], [1992, 'BW Kornwestheim'], [1993, 'Lamm-Bräu'],
+      [1994, 'Lamm-Bräu'], [1995, 'No Fear'], [1996, 'Party Animals'],
+      [1997, 'BW Kornwestheim'], [1998, 'BW Kornwestheim'], [1999, 'Panzerknacker'],
+      [2000, 'Tommy & Die Tornados'], [2001, 'Tommy & Die Tornados'], [2002, 'Praktizierende Christen'],
+      [2003, 'FC Holzburg 05'], [2004, 'Prag'], [2005, 'Panzerknacker'],
+      [2006, 'Praktizierende Christen'], [2007, 'FC Holzburg 05'], [2008, 'Prag'],
+      [2009, 'Alle Teams'], [2010, 'FC Holzburg 05'], [2011, '4 Maß ond a Göggele'],
+      [2012, 'FC Holzburg 05'], [2013, 'Hölderlin Allstars'], [2014, 'H.I.C. Habitat Felicitas'],
+      [2015, '4 Maß ond a Göggele'], [2016, 'H.I.C. Habitat Felicitas'], [2017, 'H.I.C. Habitat Felicitas'],
+      [2018, 'Praktizierende Christen'], [2019, 'kein Turnier (Neubau Kabinentrakt)'],
+      [2020, 'kein Turnier (Corona)'], [2021, 'kein Turnier (Corona)'], [2022, 'kein Turnier (Corona)'],
+      [2023, 'Platzhirsch'], [2024, 'MTV Allstars'], [2025, 'Tivoli Govas'],
+    ];
 
-(function renderSieger() {
-  const tbody = document.getElementById('sieger-table');
-  if (!tbody) return;
-  const noTurnier = (s) => s.startsWith('kein');
-  [...siegerData].reverse().forEach(([year, winner], i) => {
-    const tr = document.createElement('tr');
-    const isRecent = year >= 2023 && !noTurnier(winner);
-    tr.innerHTML = `
+    (function renderSieger() {
+      const tbody = document.getElementById('sieger-table');
+      if (!tbody) return;
+      const noTurnier = (s) => s.startsWith('kein');
+      [...siegerData].reverse().forEach(([year, winner], i) => {
+        const tr = document.createElement('tr');
+        const isRecent = year >= 2023 && !noTurnier(winner);
+        tr.innerHTML = `
       <td style="width:28px;padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#8b949e;border-bottom:1px solid #30363d;">${year}</td>
-      <td style="padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:${isRecent?'17':'15'}px;fon
+      <td style="padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:${isRecent ? '17' : '15'}px;fon
