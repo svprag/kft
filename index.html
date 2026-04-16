@@ -965,12 +965,15 @@
       // Find next upcoming matches (2)
       const nextMatches = matches.filter(m => m.Status === 'geplant' || m.Status === 'läuft').slice(0, 2);
 
-      // Group by date
-      const byDate = {};
+      // Group by date or group
+      const groups = {};
       filtered.forEach(m => {
-        const key = '14. Mai 2026';
-        if (!byDate[key]) byDate[key] = [];
-        byDate[key].push(m);
+        let key = '14. Mai 2026';
+        if (activeFilter === 'Gruppe') {
+          key = 'Gruppe ' + (m.Gruppe || '?');
+        }
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(m);
       });
 
       let html = '';
@@ -997,10 +1000,10 @@
         html += `</div>`;
       }
 
-      Object.entries(byDate).forEach(([date, dayMatches]) => {
-        html += `<div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border);">${date}</div>`;
+      Object.entries(groups).forEach(([groupName, groupMatches]) => {
+        html += `<div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border);">${groupName}</div>`;
         html += '<div class="card">';
-        dayMatches.forEach((m, i) => {
+        groupMatches.forEach((m, i) => {
           html += renderMatchRow(m);
         });
         html += '</div>';
