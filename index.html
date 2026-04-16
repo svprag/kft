@@ -643,6 +643,8 @@
     <div class="tab" onclick="showTab('gruppen', event)">Gruppen</div>
     <div class="tab" onclick="showTab('ko', event)">K.O.-Runde</div>
     <div class="tab" onclick="showTab('sieger', event)">Turniersieger</div>
+    <div class="tab" onclick="showTab('preise', event)">Getränke & Essen</div>
+    <div class="tab" onclick="showTab('regeln', event)">Regeln</div>
     <div class="tab" onclick="showTab('sponsoren', event)">Sponsoren</div>
   </nav>
 
@@ -693,6 +695,64 @@
   </div>
 
   <!-- SPONSOREN -->
+  <!-- GETRÄNKE & ESSEN -->
+  <div id="tab-preise" class="section">
+    <div
+      style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8b949e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #30363d;">
+      Preise & Verpflegung · SV Prag Stuttgart</div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Getränke</h3>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-family:'Barlow',sans-serif;font-size:14px;">
+        <tbody>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Bier / Alkoholfreies Bier (0,5l)</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">4,00 €</td></tr>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Radler (0,5l)</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">3,50 €</td></tr>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Cola / Fanta / Spezi / Apfelschorle (0,5l)</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">3,50 €</td></tr>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Sprudel (1l)</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">3,00 €</td></tr>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Weißwein (0,25l) / Weißweinschorle (0,4l)</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">4,50 €</td></tr>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Aperol Spritz / Sarti Spritz (0,4l)</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">6,00 €</td></tr>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Schnaps / Shots</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">2,00 €</td></tr>
+          <tr><td style="padding:10px 14px;">Flaschen- / Gläser-Pfand</td><td style="padding:10px 14px;text-align:right;font-weight:700;">2,00 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Speisen</h3>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-family:'Barlow',sans-serif;font-size:14px;">
+        <tbody>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Rote Wurst / Rinder-Rote / Currywurst mit Brötchen</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">4,00 €</td></tr>
+          <tr><td style="padding:10px 14px;border-bottom:1px solid #30363d;">Schweine- / Putensteak im Brötchen</td><td style="padding:10px 14px;text-align:right;border-bottom:1px solid #30363d;font-weight:700;">5,50 €</td></tr>
+          <tr><td style="padding:10px 14px;">Pommes / Kartoffelsalat</td><td style="padding:10px 14px;text-align:right;font-weight:700;">3,50 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- REGELN -->
+  <div id="tab-regeln" class="section">
+    <div
+      style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8b949e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #30363d;">
+      Turnierreglement · SV Prag Stuttgart</div>
+    <div class="card" style="padding:16px;font-size:14px;line-height:1.6;color:#e6edf3;">
+      <ul style="list-style-type:none;">
+        <li style="margin-bottom:12px;"><strong>⚽ Spieldauer:</strong> 14 Minuten ohne Seitenwechsel.</li>
+        <li style="margin-bottom:12px;"><strong>👥 Mannschaft:</strong> 5 Feldspieler + 1 Torwart. Fliegender Wechsel an der Mittellinie.</li>
+        <li style="margin-bottom:12px;"><strong>📜 Spielregeln:</strong> Kein Abseits. Freistöße sind indirekt. Rückpässe dürfen vom Torwart nicht mit der Hand aufgenommen werden. Einwurf bei Seitenaus.</li>
+        <li style="margin-bottom:12px;"><strong>🚩 Linien:</strong> Maßgebend sind die blau gefärbten Linien auf dem Kunstrasen.</li>
+        <li style="margin-bottom:12px;"><strong>🏆 Modus:</strong> Vorrunde in 6 Gruppen. Die Plätze 1 & 2 jeder Gruppe sowie die 4 besten Drittplatzierten erreichen das Achtelfinale.</li>
+        <li style="margin-bottom:12px;"><strong>⚖️ Strafen:</strong> Ein Feldverweis führt zur Sperre für das restliche Turnier (Ausnahme: 2-Minuten-Strafe).</li>
+        <li style="margin-bottom:12px;"><strong>⏰ Pünktlichkeit:</strong> Meldung bis 10 Min. vor Spielbeginn nötig. Kein Antritt führt zum Ausschluss.</li>
+        <li style="margin-bottom:12px;"><strong>🎯 Neunmeterschießen:</strong> Im K.O.-System bei Unentschieden sofort Neunmeterschießen (außer Halbfinale/Finale: 6 Min. Verlängerung). 5 Schützen pro Team.</li>
+        <li style="margin-bottom:12px;"><strong>🧹 Allgemeines:</strong> Rauchen und Essen auf dem Kunstrasen ist streng verboten. Duschen sind vorhanden. Keine Haftung für Wertgegenstände.</li>
+      </ul>
+    </div>
+  </div>
+
   <div id="tab-sponsoren" class="section">
     <div style="text-align:center;padding:8px 0 20px;">
       <img src="logos/sv_prag_logo.png" alt="SV Prag" style="height:54px;width:auto;display:block;margin:0 auto 8px;">
