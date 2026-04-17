@@ -1103,6 +1103,12 @@
       const awayWin = played && g2 > g1;
       const fieldClass = m.Platz === 'Platz 1' ? 'badge-field1' : 'badge-field2';
 
+      let info = '';
+      if (m.Runde === 'Gruppe') {
+        info = m.Gruppe ? `Gruppe ${m.Gruppe}` : '';
+      } else {
+        info = m.Runde;
+      }
       return `<div class="match-row ${played ? 'match-played' : 'match-pending'}">
     <div class="team-home">
       <div class="team-name">${m.Team1}</div>
@@ -1117,8 +1123,8 @@
         </div>
         <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-top:4px;">
           <span class="field-tag ${fieldClass}">${m.Platz}</span>
-          ${m.Runde !== 'Gruppe' ? `<span class="badge badge-ko" style="font-size:9px;">${m.Runde}</span>` : ''}
         </div>
+        <div style="font-size:10px;color:var(--text2);margin-top:2px;text-align:center;">${info}</div>
       </div>
     </div>
     <div class="team-away">
