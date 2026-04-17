@@ -1029,8 +1029,10 @@
         select.style.marginLeft = '16px';
         select.style.fontSize = '13px';
         select.style.padding = '4px 8px';
+        // Teams alphabetisch sortieren
+        const sortedTeams = [...tournamentData.teams].sort((a, b) => a.Name.localeCompare(b.Name, 'de'));
         select.innerHTML = '<option value="">Alle Teams</option>' +
-          tournamentData.teams.map(t => `<option value="${t.Name}"${selectedTeam === t.Name ? ' selected' : ''}>${t.Emoji ? t.Emoji + ' ' : ''}${t.Name}</option>`).join('');
+          sortedTeams.map(t => `<option value="${t.Name}"${selectedTeam === t.Name ? ' selected' : ''}>${t.Emoji ? t.Emoji + ' ' : ''}${t.Name}</option>`).join('');
         select.onchange = e => { window.selectedTeam = select.value; renderSpielplan(); };
         filterEl.appendChild(select);
       }
