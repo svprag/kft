@@ -1109,6 +1109,15 @@
       } else {
         info = m.Runde;
       }
+      let info = '';
+      let infoBg = '';
+      if (m.Runde === 'Gruppe') {
+        info = m.Gruppe ? `Gruppe ${m.Gruppe}` : '';
+        infoBg = 'background:rgba(31,111,235,0.13);color:#79c0ff;';
+      } else {
+        info = m.Runde;
+        infoBg = 'background:rgba(227,179,65,0.13);color:#e3b341;';
+      }
       return `<div class="match-row ${played ? 'match-played' : 'match-pending'}">
     <div class="team-home">
       <div class="team-name">${m.Team1}</div>
@@ -1124,7 +1133,7 @@
         <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-top:4px;">
           <span class="field-tag ${fieldClass}">${m.Platz}</span>
         </div>
-        <div style="font-size:10px;color:var(--text2);margin-top:2px;text-align:center;">${info}</div>
+        <div style="font-size:10px;margin-top:2px;text-align:center;padding:2px 0 2px 0;border-radius:4px;${infoBg}">${info}</div>
       </div>
     </div>
     <div class="team-away">
