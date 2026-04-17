@@ -1153,12 +1153,23 @@
         const thirdQualifies = qualifiedThirds.includes(g);
 
         html += `<div class="card">
-      <div class="card-header">
-        <h3>Gruppe ${g}</h3>
-        <span style="font-size:11px;color:var(--text2);">SP · G · U · V · Tore · Pkt</span>
-      </div>
-      <table class="standings-table">
-        <tbody>`;
+        <div class="card-header">
+          <h3>Gruppe ${g}</h3>
+        </div>
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th style="width:28px;"></th>
+              <th class="team-col">Team</th>
+              <th>SP</th>
+              <th>G</th>
+              <th>U</th>
+              <th>V</th>
+              <th>Tore</th>
+              <th>Pkt</th>
+            </tr>
+          </thead>
+          <tbody>`;
 
         standings.forEach((s, i) => {
           const team = getTeam(s.name);
