@@ -1009,19 +1009,38 @@
       const rounds = ['alle', ...new Set(matches.map(m => m.Runde))];
       const fields = ['Alle Plätze', 'Platz 1', 'Platz 2'];
 
-      // Filter buttons
+
+      // Filter buttons + Team-Dropdown
       const filterEl = document.getElementById('schedule-filter');
       filterEl.innerHTML = '';
+      let selectedTeam = window.selectedTeam || '';
       ['alle', 'Gruppe', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Spiel um Platz 3', 'Finale'].forEach(r => {
         if (!matches.find(m => m.Runde === r) && r !== 'alle') return;
         const btn = document.createElement('div');
         btn.className = 'filter-btn' + (activeFilter === r ? ' active' : '');
         btn.textContent = r === 'alle' ? 'Alle' : r;
-        btn.onclick = () => { activeFilter = r; renderSpielplan(); };
+        btn.onclick = () => { activeFilter = r; window.selectedTeam = ''; renderSpielplan(); };
         filterEl.appendChild(btn);
       });
 
-      const filtered = activeFilter === 'alle' ? matches : matches.filter(m => m.Runde === activeFilter);
+      // Team-Dropdown nur bei "Alle"
+      if (activeFilter === 'alle') {
+        const select = document.createElement('select');
+        select.style.marginLeft = '16px';
+        select.style.fontSize = '13px';
+        select.style.padding = '4px 8px';
+        // Teams alphabetisch sortieren
+        const sortedTeams = [...tournamentData.teams].sort((a, b) => a.Name.localeCompare(b.Name, 'de'));
+        select.innerHTML = '<option value="">Alle Teams</option>' +
+          sortedTeams.map(t => `<option value="${t.Name}"${selectedTeam === t.Name ? ' selected' : ''}>${t.Emoji ? t.Emoji + ' ' : ''}${t.Name}</option>`).join('');
+        select.onchange = e => { window.selectedTeam = select.value; renderSpielplan(); };
+        filterEl.appendChild(select);
+      }
+
+      let filtered = activeFilter === 'alle' ? matches : matches.filter(m => m.Runde === activeFilter);
+      if (activeFilter === 'alle' && window.selectedTeam) {
+        filtered = filtered.filter(m => m.Team1 === window.selectedTeam || m.Team2 === window.selectedTeam);
+      }
       const container = document.getElementById('spielplan-content');
 
       if (!filtered.length) { container.innerHTML = '<div class="loading">Keine Spiele gefunden</div>'; return; }
@@ -1084,6 +1103,15 @@
       const awayWin = played && g2 > g1;
       const fieldClass = m.Platz === 'Platz 1' ? 'badge-field1' : 'badge-field2';
 
+      let info = '';
+      let infoBg = '';
+      if (m.Runde === 'Gruppe') {
+        info = m.Gruppe ? `Gruppe ${m.Gruppe}` : '';
+        infoBg = 'background:rgba(31,111,235,0.13);color:#79c0ff;';
+      } else {
+        info = m.Runde;
+        infoBg = 'background:rgba(227,179,65,0.13);color:#e3b341;';
+      }
       return `<div class="match-row ${played ? 'match-played' : 'match-pending'}">
     <div class="team-home">
       <div class="team-name">${m.Team1}</div>
@@ -1098,8 +1126,8 @@
         </div>
         <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-top:4px;">
           <span class="field-tag ${fieldClass}">${m.Platz}</span>
-          ${m.Runde !== 'Gruppe' ? `<span class="badge badge-ko" style="font-size:9px;">${m.Runde}</span>` : ''}
         </div>
+        <div style="font-size:10px;margin-top:2px;text-align:center;padding:2px 0 2px 0;border-radius:4px;${infoBg}">${info}</div>
       </div>
     </div>
     <div class="team-away">
@@ -1125,12 +1153,23 @@
         const thirdQualifies = qualifiedThirds.includes(g);
 
         html += `<div class="card">
-      <div class="card-header">
-        <h3>Gruppe ${g}</h3>
-        <span style="font-size:11px;color:var(--text2);">SP · G · U · V · Tore · Pkt</span>
-      </div>
-      <table class="standings-table">
-        <tbody>`;
+        <div class="card-header">
+          <h3>Gruppe ${g}</h3>
+        </div>
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th style="width:28px;"></th>
+              <th class="team-col">Team</th>
+              <th>SP</th>
+              <th>G</th>
+              <th>U</th>
+              <th>V</th>
+              <th>Tore</th>
+              <th>Pkt</th>
+            </tr>
+          </thead>
+          <tbody>`;
 
         standings.forEach((s, i) => {
           const team = getTeam(s.name);
@@ -1190,7 +1229,36 @@
           else { stats[m.Team1].u++; stats[m.Team1].pts++; stats[m.Team2].u++; stats[m.Team2].pts++; }
         });
 
-      return Object.values(stats).sort((a, b) => b.pts - a.pts || (b.tf - b.ta) - (a.tf - a.ta) || b.tf - a.tf);
+      // Direkter Vergleich bei Punkt- und Tordifferenzgleichheit
+      const arr = Object.values(stats);
+      arr.sort((a, b) => {
+        // Standard: Punkte, Tordifferenz, Tore
+        let cmp = b.pts - a.pts;
+        if (cmp !== 0) return cmp;
+        cmp = (b.tf - b.ta) - (a.tf - a.ta);
+        if (cmp !== 0) return cmp;
+        cmp = b.tf - a.tf;
+        if (cmp !== 0) return cmp;
+
+        // Direkter Vergleich
+        // Nur wenn beide Teams gleich viele Spiele haben und es genau zwei Teams mit Gleichstand gibt
+        // Suche das direkte Duell
+        const t1 = a.name, t2 = b.name;
+        const duell = tournamentData.matches.find(m => m.Runde === 'Gruppe' && m.Gruppe === group &&
+          ((m.Team1 === t1 && m.Team2 === t2) || (m.Team1 === t2 && m.Team2 === t1)) && m.Status === 'beendet');
+        if (duell) {
+          const g1 = parseInt(duell.Tore1) || 0, g2 = parseInt(duell.Tore2) || 0;
+          if (duell.Team1 === t1 && duell.Team2 === t2) {
+            if (g1 > g2) return -1;
+            if (g2 > g1) return 1;
+          } else {
+            if (g2 > g1) return -1;
+            if (g1 > g2) return 1;
+          }
+        }
+        return 0;
+      });
+      return arr;
     }
 
     // ============================================================
