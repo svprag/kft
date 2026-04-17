@@ -1009,19 +1009,36 @@
       const rounds = ['alle', ...new Set(matches.map(m => m.Runde))];
       const fields = ['Alle Plätze', 'Platz 1', 'Platz 2'];
 
-      // Filter buttons
+
+      // Filter buttons + Team-Dropdown
       const filterEl = document.getElementById('schedule-filter');
       filterEl.innerHTML = '';
+      let selectedTeam = window.selectedTeam || '';
       ['alle', 'Gruppe', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Spiel um Platz 3', 'Finale'].forEach(r => {
         if (!matches.find(m => m.Runde === r) && r !== 'alle') return;
         const btn = document.createElement('div');
         btn.className = 'filter-btn' + (activeFilter === r ? ' active' : '');
         btn.textContent = r === 'alle' ? 'Alle' : r;
-        btn.onclick = () => { activeFilter = r; renderSpielplan(); };
+        btn.onclick = () => { activeFilter = r; window.selectedTeam = ''; renderSpielplan(); };
         filterEl.appendChild(btn);
       });
 
-      const filtered = activeFilter === 'alle' ? matches : matches.filter(m => m.Runde === activeFilter);
+      // Team-Dropdown nur bei "Alle"
+      if (activeFilter === 'alle') {
+        const select = document.createElement('select');
+        select.style.marginLeft = '16px';
+        select.style.fontSize = '13px';
+        select.style.padding = '4px 8px';
+        select.innerHTML = '<option value="">Alle Teams</option>' +
+          tournamentData.teams.map(t => `<option value="${t.Name}"${selectedTeam === t.Name ? ' selected' : ''}>${t.Emoji ? t.Emoji + ' ' : ''}${t.Name}</option>`).join('');
+        select.onchange = e => { window.selectedTeam = select.value; renderSpielplan(); };
+        filterEl.appendChild(select);
+      }
+
+      let filtered = activeFilter === 'alle' ? matches : matches.filter(m => m.Runde === activeFilter);
+      if (activeFilter === 'alle' && window.selectedTeam) {
+        filtered = filtered.filter(m => m.Team1 === window.selectedTeam || m.Team2 === window.selectedTeam);
+      }
       const container = document.getElementById('spielplan-content');
 
       if (!filtered.length) { container.innerHTML = '<div class="loading">Keine Spiele gefunden</div>'; return; }
