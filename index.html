@@ -1199,9 +1199,9 @@
           </thead>
           <tbody>`;
 
-        // Nur die ersten 4 Plätze anzeigen
-        standings.slice(0, 4).forEach((s, i) => {
-          const posClass = 'pos-q';
+        // Alle 5 Teams anzeigen, aber nur Plätze 1-4 grün markieren
+        standings.forEach((s, i) => {
+          const posClass = i < 4 ? 'pos-q' : '';
           html += `<tr>
         <td style="width:28px;"><span class="pos-num ${posClass}">${i + 1}</span></td>
         <td class="team-col">${s.name}</td>
@@ -1210,7 +1210,7 @@
         <td>${s.u}</td>
         <td>${s.v}</td>
         <td style="font-size:12px;">${s.tf}:${s.ta}</td>
-        <td class="pts-cell" style="color:var(--green-win-text)">${s.pts}</td>
+        <td class="pts-cell" style="color:${i < 4 ? 'var(--green-win-text)' : 'var(--text)'}">${s.pts}</td>
       </tr>`;
         });
 
