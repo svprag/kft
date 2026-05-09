@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 
 <head>
@@ -1379,67 +1379,7 @@
     // ============================================================
     // K.O. RUNDE
     // ============================================================
-    function renderViertelfinale() {
-      // Viertelfinale-Paarungen: VF1 & VF2 gehören zusammen, etc.
-      const viertelfinale = tournamentData.matches.filter(m => m.Runde === 'Viertelfinale');
-      if (!viertelfinale.length) return '';
 
-      // Check if all 8 Achtelfinals are completed
-      const achtelfinals = tournamentData.matches.filter(m => m.Runde === 'Achtelfinale');
-      const allAchtelfinalsCompleted = achtelfinals.length === 8 && achtelfinals.every(m => m.Status === 'beendet');
-      
-      if (!allAchtelfinalsCompleted) {
-        // Zeige normale Viertelfinale-Matches
-        let html = '';
-        viertelfinale.forEach(m => { html += renderMatchRow(m); });
-        return html;
-      }
-
-      // Zeige Paarungen: 2x Viertelfinale pro Paarung
-      let html = '';
-      
-      // Paarung 1: VF49 vs VF50
-      const vf1_49 = viertelfinale.find(m => m.SpielID === '49');
-      const vf1_50 = viertelfinale.find(m => m.SpielID === '50');
-      if (vf1_49 && vf1_50) {
-        html += `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">Paarung 1</div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px;">
-            <div style="flex:1;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;">${vf1_49.Team1}</div>
-            <div style="color:var(--text2);font-weight:700;">+</div>
-            <div style="flex:1;text-align:left;font-family:'Barlow Condensed',sans-serif;font-weight:700;">${vf1_50.Team1}</div>
-          </div>
-          <div style="text-align:center;color:var(--text2);font-size:12px;margin-bottom:8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:8px 0;">VS</div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
-            <div style="flex:1;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;">${vf1_49.Team2}</div>
-            <div style="color:var(--text2);font-weight:700;">+</div>
-            <div style="flex:1;text-align:left;font-family:'Barlow Condensed',sans-serif;font-weight:700;">${vf1_50.Team2}</div>
-          </div>
-        </div>`;
-      }
-
-      // Paarung 2: VF51 vs VF52
-      const vf2_51 = viertelfinale.find(m => m.SpielID === '51');
-      const vf2_52 = viertelfinale.find(m => m.SpielID === '52');
-      if (vf2_51 && vf2_52) {
-        html += `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">Paarung 2</div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px;">
-            <div style="flex:1;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;">${vf2_51.Team1}</div>
-            <div style="color:var(--text2);font-weight:700;">+</div>
-            <div style="flex:1;text-align:left;font-family:'Barlow Condensed',sans-serif;font-weight:700;">${vf2_52.Team1}</div>
-          </div>
-          <div style="text-align:center;color:var(--text2);font-size:12px;margin-bottom:8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:8px 0;">VS</div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
-            <div style="flex:1;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;">${vf2_51.Team2}</div>
-            <div style="color:var(--text2);font-weight:700;">+</div>
-            <div style="flex:1;text-align:left;font-family:'Barlow Condensed',sans-serif;font-weight:700;">${vf2_52.Team2}</div>
-          </div>
-        </div>`;
-      }
-
-      return html;
-    }
 
     function renderKO() {
       const rounds = ['Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Spiel um Platz 3', 'Finale'];
@@ -1449,17 +1389,10 @@
         const matches = tournamentData.matches.filter(m => m.Runde === round);
         if (!matches.length) return;
 
-        if (round === 'Viertelfinale') {
-          html += `<div class="ko-round-title">${round}</div>`;
-          html += '<div class="card">';
-          html += renderViertelfinale();
-          html += '</div>';
-        } else {
-          html += `<div class="ko-round-title">${round}</div>`;
-          html += '<div class="card">';
-          matches.forEach(m => { html += renderMatchRow(m); });
-          html += '</div>';
-        }
+        html += `<div class="ko-round-title">${round}</div>`;
+        html += '<div class="card">';
+        matches.forEach(m => { html += renderMatchRow(m); });
+        html += '</div>';
       });
 
       document.getElementById('ko-content').innerHTML = html || '<div class="loading">K.O.-Runde noch nicht gestartet</div>';
